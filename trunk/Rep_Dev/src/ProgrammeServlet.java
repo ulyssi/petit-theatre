@@ -6,6 +6,25 @@
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.Vector;
+import java.awt.Frame;
+
+import jus.util.IO;
+
+import accesBD.BDCategories;
+import accesBD.BDConnexion;
+
+import modele.Utilisateur;
+import modele.Categorie;
+import exceptions.ExceptionUtilisateur;
+import exceptions.ExceptionConnexion;
+import exceptions.CategorieException;
+import java.io.File;
 
 /**
  * Proramme Servlet.
@@ -34,23 +53,87 @@ public class ProgrammeServlet extends HttpServlet {
 	throws ServletException, IOException
     {
         ServletOutputStream out = res.getOutputStream();   
-
-	  res.setContentType("text/html");
-
-	  out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
-	  out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	  out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
-
-	  // TO DO
+	
+	res.setContentType("text/html");
+	
+	out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
+	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
+	out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
+	
+	// TO DO
 	  // Recuperation de la liste de tous les spectacles de la saison.
 	  // Puis construction dynamique d'une page web decrivant ces spectacles.
-	  out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
-	  out.println("<p><i><font color=\"#FFFFFF\">...</i></p>");
+	out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
+	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
+	
+	
+		
+	Utilisateur user = null;
+	String login;
+	String passwd;
+	// lecture des parametres de connexion dans connection.conf
+	Properties p = new Properties();
+	InputStream is = null;
+	String relativeWebPath = "/WEB-INF/files/connection.conf";
+	String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
+	File file = new File(absoluteDiskPath);
+	
+	
+	is = new FileInputStream(file);
+	p.load(is);
+	login = p.getProperty("user");
+	passwd = p.getProperty("mdp");
+	
+	
+	/* test de la connexion */
+	try{
+	    Connection conn = BDConnexion.getConnexion(login, passwd);
+	    
+	    if (conn != null) {
+		BDConnexion.FermerTout(conn, null, null);
+		user = new Utilisateur(login, passwd);
+		out.println(login+"  "+passwd);
+		out.println("connexiton etablie connexion bd");
+	
+	    } 
+	    else {
+		out.println(login+"  "+passwd);
+		out.println("erreur connexion bd");
+	    }
+	}
+	catch (Exception e){
+	    out.println(login+"  "+passwd);
+	    out.println("erreur connexion execetoiprfealjzrmlkj bd");
+	    out.println(e.getMessage());
+	}
+	
+	Vector<Categorie> resultat = new Vector<Categorie>();
+	try {
+	    out.println("===================");
+	    out.println("Listes des categories tarifaires<br>");
+	    resultat = BDCategories.getCategorie(user);
+	    if (resultat.isEmpty()) {
+		out.println(" Liste vide ");
+	    } else {
+		for (int i = 0; i < resultat.size(); i++) {
+		    out.println(resultat.elementAt(i).getCategorie() + " (prix : "
+				+ resultat.elementAt(i).getPrix()+")" +"<br>");
+		}
+	    }
+	    out.println("===================");
+	} catch (CategorieException e) {
+	    out.println(" Erreur dans l'affichage des categories : "
+			+ e.getMessage());
+	} catch (ExceptionConnexion e) {
+	    out.println(" Erreur dans l'affichage des categories : "
+			+ e.getMessage());
+	}
+	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
 
-	  out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
-	  out.println("</BODY>");
-	  out.close();
-
+	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");	
+	
+	out.close();
+	
     }
 
    /**
@@ -68,7 +151,7 @@ public class ProgrammeServlet extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException
     {
-	  doGet(req, res);
+	doGet(req, res);
     }
 
 
@@ -79,6 +162,7 @@ public class ProgrammeServlet extends HttpServlet {
     */
 
     public String getServletInfo() {
+		
         return "Retourne le programme du theatre";
     }
 
