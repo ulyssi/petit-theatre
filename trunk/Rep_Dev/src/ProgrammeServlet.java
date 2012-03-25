@@ -14,11 +14,9 @@ import java.sql.Connection;
 import java.util.Vector;
 import java.awt.Frame;
 
-import jus.util.IO;
 
-import accesBD.BDCategories;
-import accesBD.BDConnexion;
-
+import utils.Constantes;
+import utils.Utilitaires;
 import modele.Utilisateur;
 import modele.Categorie;
 import exceptions.ExceptionUtilisateur;
@@ -66,70 +64,20 @@ public class ProgrammeServlet extends HttpServlet {
 	out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
 	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
 	
-	
-		
-	Utilisateur user = null;
-	String login;
-	String passwd;
-	// lecture des parametres de connexion dans connection.conf
-	Properties p = new Properties();
-	InputStream is = null;
-	String relativeWebPath = "/WEB-INF/files/connection.conf";
-	String absoluteDiskPath = getServletContext().getRealPath(relativeWebPath);
-	File file = new File(absoluteDiskPath);
-	
-	
-	is = new FileInputStream(file);
-	p.load(is);
-	login = p.getProperty("user");
-	passwd = p.getProperty("mdp");
-	
-	
-	/* test de la connexion */
+
 	try{
-	    Connection conn = BDConnexion.getConnexion(login, passwd);
+	    Utilisateur user = Utilitaires.Identification(this);
 	    
-	    if (conn != null) {
-		BDConnexion.FermerTout(conn, null, null);
-		user = new Utilisateur(login, passwd);
-		out.println(login+"  "+passwd);
-		out.println("connexiton etablie connexion bd");
-	
-	    } 
-	    else {
-		out.println(login+"  "+passwd);
-		out.println("erreur connexion bd");
-	    }
+	    out.println(Utilitaires.AfficherCategories(user));
 	}
-	catch (Exception e){
-	    out.println(login+"  "+passwd);
-	    out.println("erreur connexion execetoiprfealjzrmlkj bd");
+	
+	catch(Exception e){
 	    out.println(e.getMessage());
 	}
 	
-	Vector<Categorie> resultat = new Vector<Categorie>();
-	try {
-	    out.println("===================");
-	    out.println("Listes des categories tarifaires<br>");
-	    resultat = BDCategories.getCategorie(user);
-	    if (resultat.isEmpty()) {
-		out.println(" Liste vide ");
-	    } else {
-		for (int i = 0; i < resultat.size(); i++) {
-		    out.println(resultat.elementAt(i).getCategorie() + " (prix : "
-				+ resultat.elementAt(i).getPrix()+")" +"<br>");
-		}
-	    }
-	    out.println("===================");
-	} catch (CategorieException e) {
-	    out.println(" Erreur dans l'affichage des categories : "
-			+ e.getMessage());
-	} catch (ExceptionConnexion e) {
-	    out.println(" Erreur dans l'affichage des categories : "
-			+ e.getMessage());
-	}
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
 
+	
+	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");	
 	
 	out.close();

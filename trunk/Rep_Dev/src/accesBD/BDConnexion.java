@@ -29,8 +29,8 @@ public final class BDConnexion {
 			// lecture des parametres de connexion dans connection.conf
 			Properties p = new Properties();
 			InputStream is = null;
-			// is = new FileInputStream(utils.Constantes.Config);
-			// p.load(is);
+			//is = new FileInputStream(utils.Constantes.Config);
+			//p.load(is);
 			// String url = p.getProperty("url");
 			// String driver = p.getProperty("driver");
 			String driver= "oracle.jdbc.OracleDriver";
