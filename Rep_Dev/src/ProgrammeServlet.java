@@ -42,8 +42,8 @@ public class ProgrammeServlet extends HttpServlet {
 	  out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
 
 	  // TO DO
-	  // Récupération de la liste de tous les spectacles de la saison.
-	  // Puis construction dynamique d'une page web décrivant ces spectacles.
+	  // Recuperation de la liste de tous les spectacles de la saison.
+	  // Puis construction dynamique d'une page web decrivant ces spectacles.
 	  out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
 	  out.println("<p><i><font color=\"#FFFFFF\">...</i></p>");
 
@@ -79,7 +79,7 @@ public class ProgrammeServlet extends HttpServlet {
     */
 
     public String getServletInfo() {
-        return "Retourne le programme du théatre";
+        return "Retourne le programme du theatre";
     }
 
 }

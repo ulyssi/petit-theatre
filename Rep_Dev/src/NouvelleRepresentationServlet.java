@@ -38,7 +38,7 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 
 	  res.setContentType("text/html");
 
-	  out.println("<HEAD><TITLE> Ajouter une nouvelle représentation </TITLE></HEAD>");
+	  out.println("<HEAD><TITLE> Ajouter une nouvelle representation </TITLE></HEAD>");
 	  out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	  out.println("<font color=\"#FFFFFF\"><h1> Ajouter une nouvelle repr&eacute;sentation </h1>");
 
@@ -64,9 +64,9 @@ public class NouvelleRepresentationServlet extends HttpServlet {
             	out.println("</form>");
 	  } else {
 	  	// TO DO
-		// Transformation des paramètres vers les types adéquats.
-	  	// Ajout de la nouvelle représentation.
-	  	// Puis construction dynamique d'une page web de réponse.
+		// Transformation des parametres vers les types adequats.
+	  	// Ajout de la nouvelle representation.
+	  	// Puis construction dynamique d'une page web de reponse.
 	  	out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
 	  	out.println("<p><i><font color=\"#FFFFFF\">...</i></p>");
 	  }
@@ -104,7 +104,7 @@ public class NouvelleRepresentationServlet extends HttpServlet {
     */
 
     public String getServletInfo() {
-        return "Ajoute une représentation à une date donnée pour un spectacle existant";
+        return "Ajoute une representation a une date donnee pour un spectacle existant";
     }
 
 }
