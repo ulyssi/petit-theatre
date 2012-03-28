@@ -61,7 +61,7 @@ public class ProgrammeServlet extends HttpServlet {
 	// Recuperation de la liste de tous les spectacles de la saison.
 	// Puis construction dynamique d'une page web decrivant ces spectacles.
 	out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
-	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
+	//	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
 	
 
 	try{
@@ -74,7 +74,7 @@ public class ProgrammeServlet extends HttpServlet {
 	}
 		
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");	
+	//out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");	
 	
 	out.close();
 	
