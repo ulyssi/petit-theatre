@@ -33,7 +33,7 @@ public class Utilitaires {
     }
     
     
-    public static String AfficherCategories(Utilisateur user) throws IOException {
+    public static String AfficherProgramme(Utilisateur user) throws IOException {
 	Vector<Categorie> res = new Vector<Categorie>();
 	String resultat ="";
 	    try {

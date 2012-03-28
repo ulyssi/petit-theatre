@@ -53,30 +53,26 @@ public class ProgrammeServlet extends HttpServlet {
         ServletOutputStream out = res.getOutputStream();   
 	
 	res.setContentType("text/html");
-	
 	out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
-	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
+	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau_pr.jpg\">");
 	out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
 	
 	// TO DO
-	  // Recuperation de la liste de tous les spectacles de la saison.
-	  // Puis construction dynamique d'une page web decrivant ces spectacles.
+	// Recuperation de la liste de tous les spectacles de la saison.
+	// Puis construction dynamique d'une page web decrivant ces spectacles.
 	out.println("<p><i><font color=\"#FFFFFF\">A compl&eacute;ter</i></p>");
 	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
 	
 
 	try{
 	    Utilisateur user = Utilitaires.Identification(this);
-	    
-	    out.println(Utilitaires.AfficherCategories(user));
+	    out.println(Utilitaires.AfficherProgramme(user));
 	}
 	
 	catch(Exception e){
 	    out.println(e.getMessage());
 	}
-	
-
-	
+		
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Accueil</a></p>");	
 	
@@ -108,9 +104,8 @@ public class ProgrammeServlet extends HttpServlet {
     *
     * @return String information about this servlet
     */
-
+    
     public String getServletInfo() {
-		
         return "Retourne le programme du theatre";
     }
 
