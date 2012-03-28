@@ -1,11 +1,11 @@
 package modele;
 
-public class Categorie {
+public class Representation {
 
 	private String categorie;
 	private float prix;
 	
-	public Categorie (String c, float p) {
+	public Representation (String c, float p) {
 		this.categorie = c;
 		this.prix = p;
 	}
