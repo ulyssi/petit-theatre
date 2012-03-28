@@ -12,10 +12,12 @@ import java.awt.Frame;
 
 
 import accesBD.BDCategories;
+import accesBD.BDProgramme;
 import accesBD.BDConnexion;
 
 import modele.Utilisateur;
 import modele.Categorie;
+import modele.Spectacle;
 import exceptions.ExceptionUtilisateur;
 import exceptions.ExceptionConnexion;
 import exceptions.CategorieException;
@@ -34,25 +36,25 @@ public class Utilitaires {
     
     
     public static String AfficherProgramme(Utilisateur user) throws IOException {
-	Vector<Categorie> res = new Vector<Categorie>();
+	Vector<Spectacle> res = new Vector<Spectacle>();
 	String resultat ="";
 	    try {
 		resultat=resultat+"===================<br>";
 		resultat=resultat+"Listes des categories tarifaires<br>";
-		res = BDCategories.getCategorie(user);
+		res = BDProgramme.getSpectacle(user);
 		if (res.isEmpty()) {
 		    resultat=resultat+" Liste vide <br>";
 		} else {
 		    for (int i = 0; i < res.size(); i++) {
-			resultat=resultat+res.elementAt(i).getCategorie() + " (prix : "
-			+ res.elementAt(i).getPrix() + ")<br>";
+			resultat=resultat+res.elementAt(i).getNom() + " (num : "
+			+ res.elementAt(i).getNum() + ")<br>";
 		    }
 		}
 		resultat=resultat+"===================<br>";
 	    } catch (CategorieException e) {
-		resultat=resultat+" Erreur dans l'affichage des categories : "+ e.getMessage()+"<br>";
+		resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
 	    } catch (ExceptionConnexion e) {
-		resultat=resultat+" Erreur dans l'affichage des categories : "+ e.getMessage()+"<br>";}
+		resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
 	return resultat;
     }
 
