@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-import jus.util.IO;
 
 import oracle.jdbc.pool.OracleDataSource;
 import exceptions.ExceptionConnexion;
@@ -23,26 +22,26 @@ public final class BDConnexion {
 	    */
 
 	public static Connection getConnexion(String login, String mdp) throws ExceptionConnexion {
-		Connection conn = null ;
-		try {
+	    Connection conn = null ;
+	    try {
 
-			// lecture des parametres de connexion dans connection.conf
-			Properties p = new Properties();
-			InputStream is = null;
-			//is = new FileInputStream(utils.Constantes.Config);
-			//p.load(is);
+		// lecture des parametres de connexion dans connection.conf
+		Properties p = new Properties();
+		InputStream is = null;
+		//is = new FileInputStream(utils.Constantes.Config);
+		//p.load(is);
 			// String url = p.getProperty("url");
 			// String driver = p.getProperty("driver");
-			String driver= "oracle.jdbc.OracleDriver";
-			Class.forName(driver);
-			// hopper@UFR, Oracle
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ufrima","cadouru","bd2009");
-			conn.setAutoCommit(false);
-		} catch (SQLException e) {
-			IO.afficherln("Connexion impossible : " + e.getMessage());// handle any errors
-			IO.afficherln("SQLException: " + e.getMessage());
-			IO.afficherln("SQLState: " + e.getSQLState());
-			IO.afficherln("VendorError: " + e.getErrorCode());
+		String driver= "oracle.jdbc.OracleDriver";
+		Class.forName(driver);
+		// hopper@UFR, Oracle
+		conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:ufrima","cadouru","bd2009");
+		conn.setAutoCommit(false);
+	    } catch (SQLException e) {
+		// IO.afficherln("Connexion impossible : " + e.getMessage());// handle any errors
+		// 	IO.afficherln("SQLException: " + e.getMessage());
+		// 	IO.afficherln("SQLState: " + e.getSQLState());
+		// 	IO.afficherln("VendorError: " + e.getErrorCode());
 		}//  catch (IOException e) {
 		// 	throw new ExceptionConnexion ("fichier conf illisible \n" + e.getMessage());
 		// }
