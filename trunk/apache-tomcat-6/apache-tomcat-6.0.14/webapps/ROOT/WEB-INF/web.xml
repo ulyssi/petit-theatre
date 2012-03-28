@@ -23,6 +23,10 @@
 <servlet-class>NouvelleRepresentationServlet</servlet-class> 
 </servlet>
 
+- <servlet> 
+<servlet-name>RepresentationServlet</servlet-name> 
+<servlet-class>RepresentationServlet</servlet-class> 
+</servlet>
 
 
 
@@ -30,6 +34,14 @@
 <servlet-name>ProgrammeServlet</servlet-name> 
 <url-pattern>/servlet/ProgrammeServlet</url-pattern> 
 </servlet-mapping>
+
+
+- <servlet-mapping> 
+<servlet-name>RepresentationServlet</servlet-name> 
+<url-pattern>/servlet/RepresentationServlet</url-pattern> 
+</servlet-mapping>
+
+
 
 - <servlet-mapping> 
 <servlet-name>NouvelleRepresentationServlet</servlet-name> 
