@@ -118,11 +118,11 @@ public class Utilitaires {
 	}
 	catch (CategorieException e) {
 	    resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
-    }
+	}
 	catch (ExceptionConnexion e) {
 	    resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
 	return resultat;
-}
+    }
 
 
 
