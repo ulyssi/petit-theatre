@@ -1,28 +1,29 @@
 package modele;
 
+import java.util.Date;
 public class Representation {
 
-	private String categorie;
-	private float prix;
+    private Date date;
+    private int num ;
 	
-	public Representation (String c, float p) {
-		this.categorie = c;
-		this.prix = p;
+    public Representation (int n, Date d) {
+		this.date = d;
+		this.num = n;
 	}
 
-	public String getCategorie () {
-		return this.categorie;
+	public int  getNum () {
+		return this.num;
 	}
 	
-	public float getPrix () {
-		return this.prix;
+	public Date getDate () {
+		return this.date;
 	}
 	
-	public void setCategorie (String c) {
-		this.categorie = c;
+	public void setNum (int n) {
+		this.num= n;
 	}
 	
-	public void setPrix (float p) {
-		this.prix = p;
+	public void setDate (Date d) {
+		this.date = d;
 	}
 }

@@ -73,23 +73,7 @@ public class RepresentationServlet extends HttpServlet {
 	    out.println("<a href=\"admin/admin.html\">afficher caddie("+((ArrayList)session.getAttribute("sessiontest.list")).size()+"Places)"+"</a></font><br></p>");
 	out.println("<br>Session ID: " + req.getRequestedSessionId());
 	out.println("New Session: " + session.isNew()+"<br>");
-	//JAVASCRIPT FUNCTION !
 	session.setAttribute("sessiontest.list", new ArrayList<String>());
-
-	
-          
-	// session.setAttribute("sessiontest.counter", ival);
-	// out.println("You have hit this page <b>" + ival + "</b> times.<p>");
-	// out.println("<h3>Request and Session Data:</h3>");
-	// out.println("New Session: " + session.isNew());
-	// out.println("<br>Session ID: " + req.getRequestedSessionId());
-	// out.println("<br>Valid Session ID: " + req.isRequestedSessionIdValid());
-	// out.println("<br>Session creation Time: " + session.getCreationTime());
-	// out.println("<br>Last Accessed Time: " + session.getLastAccessedTime());
-	// out.println("<br>Session ID in Request from Cookie: " + req.isRequestedSessionIdFromCookie());
-	// out.println("<br>Session ID in Request from URL: " + req.isRequestedSessionIdFromURL());
-	// out.println("<p>Reload the page to ensure that session tracking is working.");
-	
 	try{
 	    Utilisateur user = Utilitaires.Identification(this);
 	    out.println(Utilitaires.AffichageAchat(user));

@@ -28,12 +28,15 @@
 <servlet-class>RepresentationServlet</servlet-class> 
 </servlet>
 
-
 - <servlet> 
-<servlet-name>NoPlaceServlet</servlet-name> 
-<servlet-class>NoPlaceServlet</servlet-class> 
+<servlet-name>Panier</servlet-name> 
+<servlet-class>Panier</servlet-class> 
 </servlet>
 
+- <servlet> 
+<servlet-name>HelloToServlet</servlet-name> 
+<servlet-class>HelloToServlet</servlet-class> 
+</servlet>
 
 
 - <servlet-mapping> 
@@ -56,9 +59,13 @@
 
 
 - <servlet-mapping> 
-<servlet-name>NoPlaceServlet</servlet-name> 
-<url-pattern>/servlet/NoPlaceServlet</url-pattern> 
+<servlet-name>Panier</servlet-name> 
+<url-pattern>/servlet/Panier</url-pattern> 
 </servlet-mapping>
 
+- <servlet-mapping> 
+<servlet-name>HelloToServlet</servlet-name> 
+<url-pattern>/servlet/HelloToServlet</url-pattern> 
+</servlet-mapping>
 
 </web-app>
