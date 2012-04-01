@@ -108,7 +108,7 @@ public class BDProgramme {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    while (rs.next()) {
-		res.addElement(new Place(rs.getInt(1),rs.getInt(2))); 
+		res.addElement(new Place(rs.getInt(2),rs.getInt(1))); 
 	    }
 	} catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des Places disponibles..<br>"+requete+
