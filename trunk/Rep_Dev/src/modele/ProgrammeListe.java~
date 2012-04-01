@@ -1,0 +1,9 @@
+package modele; 
+
+
+public class ProgrammeListe{
+
+    public Spectacle spectacle;
+    public ArrayList <Rerepresentations> representations
+
+}
