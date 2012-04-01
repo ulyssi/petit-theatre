@@ -48,19 +48,19 @@ public class NoPlaceServlet extends HttpServlet {
 	
 	res.setContentType("text/html");
 	 out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	 out.println("<font color=\"#FFFFFF\"><h1> Lister les places disponible pour une representation donne </h1>");
+	 
 	
 	numS= req.getParameter("numS");
-	jourS= req.getParameter("jourS");
-	moisS= req.getParameter("moisS");
-	anneeS= req.getParameter("anneeS");
-	heureS= req.getParameter("heureS");
+	jourS= req.getParameter("jour");
+	moisS= req.getParameter("mois");
+	anneeS= req.getParameter("annee");
+	heureS= req.getParameter("heure");
 	if (numS == null|jourS== null|moisS== null|anneeS== null| heureS== null) {
-	    
-	    out.println("<font color=\"#FFFFFF\">Veuillez saisir le numero de spectacle");
+	    out.println("<font color=\"#FFFFFF\"><h1> Lister les places disponible pour une representation donn&eacute;e </h1>");
+	    out.println("<font color=\"#FFFFFF\">Veuillez saisir le num&eacute;ro de spectacle");
 	    out.println("<P>");
 	    out.print("<form action=\"");
-	    out.print("RepresentationServlet\" ");
+	    out.print("NoPlaceServlet\" ");
 	    out.println("method=POST>");
 	    out.println("Num&eacute;ro de spectacle :");
 	    out.println("<input type=text size= 5 name=numS>");
@@ -76,6 +76,7 @@ public class NoPlaceServlet extends HttpServlet {
 	    
 	} else {	   
 	    try{
+		out.println("<font color=\"#FFFFFF\"><h1>Resultats: </h1>");
 		String date="";
 		date=date+jourS+"/"+moisS+"/"+anneeS+" "+heureS+"h";
 		Utilisateur user = Utilitaires.Identification(this);
@@ -87,7 +88,7 @@ public class NoPlaceServlet extends HttpServlet {
 	    }
 	}
 
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");
+
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Page d'accueil</a></p>");
 	out.println("</BODY>");
 	out.close();
@@ -120,7 +121,7 @@ public class NoPlaceServlet extends HttpServlet {
      */
 
     public String getServletInfo() {
-        return "donne les representations associé à un spectacle existant";
+        return "donne les places libre associé à une representation";
     }
 
 

@@ -99,10 +99,11 @@ public class BDProgramme {
 	ResultSet rs ;
 	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	//	insert into LESREPRESENTATIONS values ('101', TO_DATE('06/11/2009 20h','DD/MM/YYYY HH24"h"'));	
-	requete = "Select P.noPlace,P.noRang from LESREPRESENTATIONS R LESPLACES P where not exists";
-	requete=requete+"Select from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
-	requete=requete+ "and T.noPlace = P.noPlace and T.noRang=P.noRang";
-
+	requete = "Select P.noPlace, P.noRang from LESPLACES P, LESREPRESENTATIONS R where ";
+	requete=requete+"R.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"') and ";
+	requete=requete+"not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
+	requete=requete+ " and T.noPlace = P.noPlace and T.noRang=P.noRang)";
+	System.out.println(requete);
 	try {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
@@ -110,8 +111,8 @@ public class BDProgramme {
 		res.addElement(new Place(rs.getInt(1),rs.getInt(2))); 
 	    }
 	} catch (SQLException e) {
-	    throw new CategorieException (" Problème dans l'interrogation des Places disponibles.."
-					  + "Code Oracle " + e.getErrorCode()
+	    throw new CategorieException (" Problème dans l'interrogation des Places disponibles..<br>"+requete+
+					   "<br> Code Oracle " + e.getErrorCode()
 					  + "Message " + e.getMessage());
 	}
 	BDConnexion.FermerTout(conn, stmt, rs);	
