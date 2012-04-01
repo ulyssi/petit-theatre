@@ -5,7 +5,7 @@ public class PanierListe {
     public ArrayList<Item> Liste;
     
     public PanierListe(){
-	Liste=new <Item>ArrayList();
+	Liste=new ArrayList<Item>();
     }
     
     public int getSize(){
