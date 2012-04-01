@@ -48,7 +48,7 @@ public class NoPlaceServlet extends HttpServlet {
 	
 	res.setContentType("text/html");
 	 out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	 out.println("<font color=\"#FFFFFF\"><h1> Lister les representation  </h1>");
+	 out.println("<font color=\"#FFFFFF\"><h1> Lister les places disponible pour une representation donne </h1>");
 	
 	numS= req.getParameter("numS");
 	jourS= req.getParameter("jourS");
