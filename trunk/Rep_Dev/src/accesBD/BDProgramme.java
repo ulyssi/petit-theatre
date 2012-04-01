@@ -14,6 +14,7 @@ import exceptions.ExceptionConnexion;
 import modele.Spectacle;
 import modele.Utilisateur;
 import modele.Place;
+import modele.*;
 
 public class BDProgramme {
     public BDProgramme () {
@@ -48,7 +49,7 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
-
+ 
     public static void addRepresentation(Utilisateur user,int numS,String dateS)throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;
@@ -142,5 +143,46 @@ public class BDProgramme {
 	
     // }
 
+
+    public static Vector<ProgrammeListe> getProgramListes(Utilisateur user)
+	throws CategorieException, ExceptionConnexion {
+	Vector<ProgrammeListe> res = new Vector<ProgrammeListe>();
+	String requete ;
+	Statement stmt ;
+	ResultSet rs ;
+	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	requete = "select S.numS ,S.nomS ,dateRep FROM LesSpectacles S, LesRepresentations R where S.numS=R.numS ORDER BY nomS";
+	try {
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    Spectacle sCourant = null;
+	    ProgrammeListe pc = null;
+	    while (rs.next()) {
+		int num = rs.getInt(1);
+		sCourant = new Spectacle(rs.getString(2),num);
+		Representation r = new Representation(num, rs.getDate(3));
+		if ( pc==null){
+		    pc = new ProgrammeListe(sCourant);
+		    pc.representations.add(r);
+		    res.addElement(pc);
+		}
+		else 
+		    if (pc.spectacle.getNom().equals(sCourant.getNom()))
+			pc.representations.add(r);
+		    else{
+			pc = new ProgrammeListe(sCourant);
+			pc.representations.add(r);
+			res.addElement(pc);
+		    }
+		
+	    }
+	} catch (SQLException e) {
+	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
+					  + "Code Oracle " + e.getErrorCode()
+					  + "Message " + e.getMessage());
+	}
+	BDConnexion.FermerTout(conn, stmt, rs);
+	return res;
+    }
 
 }
