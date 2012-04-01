@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import utils.Utilitaires;
 import modele.Utilisateur;
-
+import modele.*;
 import java.io.*;
 import java.util.Enumeration;
 
@@ -67,13 +67,17 @@ public class RepresentationServlet extends HttpServlet {
 	}catch (Exception e){//Catch exception if any
 	    out.println("Error: " + e.getMessage());
 	}
-	if(session.isNew()||((ArrayList)session.getAttribute("sessiontest.list"))!=null&&((ArrayList)session.getAttribute("sessiontest.list")).size()>0)
-	    out.println("<a href=\"admin/admin.html\">afficher caddie (vide)</a></font><br></p>");
+	if(session.isNew()||((PanierListe)session.getAttribute("session.PanierListe"))!=null&&((PanierListe)session.getAttribute("session.PanierListe")).getSize()<0){
+	    //creation panier
+	    session.setAttribute("session.PanierListe", new PanierListe());
+	    out.println("<a href=\"admin/admin.html\">afficher caddie (vide)</a></font><br></p>");}
 	else
-	    out.println("<a href=\"admin/admin.html\">afficher caddie("+((ArrayList)session.getAttribute("sessiontest.list")).size()+"Places)"+"</a></font><br></p>");
+	    out.println("<a href=\"admin/admin.html\">afficher caddie("+((PanierListe)session.getAttribute("session.PanierListe")).Liste.size()+"Representations dans le panier)"+"</a></font><br></p>");
 	out.println("<br>Session ID: " + req.getRequestedSessionId());
 	out.println("New Session: " + session.isNew()+"<br>");
-	session.setAttribute("sessiontest.list", new ArrayList<String>());
+	PanierListe p = new PanierListe();
+	session.setAttribute("session.PanierListe", p);
+	
 	try{
 	    Utilisateur user = Utilitaires.Identification(this);
 	    out.println(Utilitaires.AffichageAchat(user));
