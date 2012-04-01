@@ -69,26 +69,19 @@ public class Utilitaires {
     }
     
     
-    public static String AfficherProgramme(Utilisateur user) throws IOException {
+    public static Vector<Spectacle> getProgramme(Utilisateur user) throws IOException {
 	Vector<Spectacle> res = new Vector<Spectacle>();
 	String resultat ="";
 	    try {
 		resultat=resultat+"Listes des Spectacles de la Saison<br>";
 		res = BDProgramme.getSpectacle(user);
-		if (res.isEmpty()) {
-		    resultat=resultat+" Liste vide <br>";
-		} else {
-		    for (int i = 0; i < res.size(); i++) {
-			resultat=resultat+" num "
-			+ res.elementAt(i).getNum() + " :  "+res.elementAt(i).getNom()+"<br>";
-		    }
-		}
-	
+		
+		
 	    } catch (CategorieException e) {
 		resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
 	    } catch (ExceptionConnexion e) {
 		resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
-	return resultat;
+	return res;
     }
 
     public static String AjouterRepresentation(Utilisateur user,int numS, String dateS){
@@ -110,13 +103,13 @@ public class Utilitaires {
 	Vector<Date> res = new Vector<Date>();
 	String resultat ="";
 	    try {
-		resultat=resultat+"Listes des représentation pour le spectacle "+numS+"<br>";
+		
 		res = BDProgramme.getRepresentation(user,numS);
 		if (res.isEmpty()) {
-		    resultat=resultat+" Aucune repr&eacute;sentation disponible pour votre requete <br>";
+		    resultat=resultat+" Aucune repr&eacute;sentation disponible<br>";
 		} else {
 		    for (int i = 0; i < res.size(); i++) {
-			resultat=resultat+"<br>" + res.elementAt(i);
+			resultat=resultat + res.elementAt(i)+"<br>";
 		    }
 		}
 		
