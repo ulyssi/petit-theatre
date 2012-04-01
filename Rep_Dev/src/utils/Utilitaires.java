@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Vector;
 import java.util.Date;
-
+import modele.*;
 import java.awt.Frame;
 
 
@@ -32,31 +32,32 @@ public class Utilitaires {
     public Utilitaires() {
     }
      public static String AffichageAchat(Utilisateur user) throws IOException {
-	  Vector<Spectacle> res = new Vector<Spectacle>();
+	  Vector<ProgrammeListe> res = new Vector<ProgrammeListe>();
 	  String resultat ="";
 	  resultat=resultat+"<div align=\"center\";\">\n";
 	  resultat=resultat+"<p><strong>Liste des Representations Disponibles </strong></p>\n";
 	  resultat+="<div class=\"menu_list\" id=\"secondpane\">\n";
 	  //add to make post wihout button
 	  try {
-	      res = BDProgramme.getSpectacle(user);
+	      res = BDProgramme.getProgramListes(user);
 	      if (res.isEmpty()) {
 		  resultat=resultat+"</div>";
-		  } else {
+	      } else {
 		  for (int i = 0; i < res.size(); i++) {
-		      resultat+="<p class=\"menu_head\">"+ res.elementAt(i).getNum() + " :  "+res.elementAt(i).getNom()+"</p>\n";
+	       	      resultat+="<p class=\"menu_head\">"+ res.elementAt(i).spectacle.getNum() + " :  "+res.elementAt(i).spectacle.getNom()+"</p>\n";
 		      
-		      resultat+="<div class=\"menu_body\">\n";
-		      Vector<Date> representations=BDProgramme.getRepresentation(user,res.elementAt(i).getNum());
-		      for(Date rdate: representations){
+	      	      resultat+="<div class=\"menu_body\">\n";
+		      for(Representation rp:  res.elementAt(i).representations){
 			  resultat+="<form class=\"link\" action=Panier\n";
 			  resultat+="method=POST>\n";
-			  resultat+="<button name=\"firstname\" value =\""+rdate.toString()+"\" type=\"submit\">"+"Date de la repr&eacutesentation :"+rdate.toString()+"</button>\n";		
-			  resultat+="</form>\n";
-		      }	
-		      
-		      resultat+= "</div>\n";
-		  }
+	      		  resultat+="<input type=\"hidden\" name=\"num\" value=\""+rp.getNum()+"\" />\n";
+	      		  resultat+="<input type=\"hidden\" name=\"nom\" value=\""+res.elementAt(i).spectacle.getNom()+"\" />\n";
+	      		  resultat+="<button name=\"date\" value =\""+rp.getDate().toString()+"\" type=\"submit\">"+"Date de la repr&eacutesentation :"+rp.getDate().toString()+"</button>\n";		
+	      		  resultat+="</form>\n";
+	      	      }	
+			      
+	      	      resultat+= "</div>\n";
+	      	  }
 	      }
 	
 	    } catch (CategorieException e) {

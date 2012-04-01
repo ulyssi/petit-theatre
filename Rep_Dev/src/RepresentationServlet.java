@@ -11,7 +11,7 @@ import modele.Utilisateur;
 import modele.*;
 import java.io.*;
 import java.util.Enumeration;
-
+import java.util.Date;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import java.util.ArrayList;
 /**
  * NouvelleRepresentation Servlet.
  *
- * Cette servlet donne la liste des .
- *
- * @author <a href="mailto:Sara.Bouchenak@imag.fr">Sara Bouchenak</a>
- * @version 1.0, 31/10/2007
+ * Cette Servlet permet de selectionner un Spectacle pour permmetre ensuite 
+ * de faire des reservations.
+ * @author ulysse cadour
+ * @version
  */
 
 public class RepresentationServlet extends HttpServlet {
@@ -33,19 +33,15 @@ public class RepresentationServlet extends HttpServlet {
      */
     public void doGet (HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException {
-
 	//Get the session object
 	HttpSession session = req.getSession(true);
 	//Get the output stream
 	ServletOutputStream out = res.getOutputStream();
 	res.setContentType("text/html");
-
-
 	out.println("<HEAD><TITLE>Reservation de tickets </TITLE></HEAD><BODY>");
 	out.println("<h1> Reservations de tickets </h1>"); 
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	out.println("<p align=\"Right\"><font face=\"Monotype Corsiva\"style=\"font-size: 16pt\">");
-
 	try{
 	    // Open the file that is the first 
 	    // command line parameter
@@ -67,17 +63,11 @@ public class RepresentationServlet extends HttpServlet {
 	}catch (Exception e){//Catch exception if any
 	    out.println("Error: " + e.getMessage());
 	}
-	if(session.isNew()||((PanierListe)session.getAttribute("session.PanierListe"))!=null&&((PanierListe)session.getAttribute("session.PanierListe")).getSize()<0){
-	    //creation panier
-	    session.setAttribute("session.PanierListe", new PanierListe());
-	    out.println("<a href=\"admin/admin.html\">afficher caddie (vide)</a></font><br></p>");}
-	else
-	    out.println("<a href=\"admin/admin.html\">afficher caddie("+((PanierListe)session.getAttribute("session.PanierListe")).Liste.size()+"Representations dans le panier)"+"</a></font><br></p>");
-	out.println("<br>Session ID: " + req.getRequestedSessionId());
-	out.println("New Session: " + session.isNew()+"<br>");
-	PanierListe p = new PanierListe();
-	session.setAttribute("session.PanierListe", p);
-	
+	if(session.isNew()||session.getAttribute("session.PanierListe")==null)
+	    out.println("<a href=\"admin/admin.html\">Caddie (vide)</a></font><br></p>");
+	else if(session.getAttribute("session.PanierListe")!=null)
+	    if(((PanierListe)session.getAttribute("session.PanierListe")).getSize()>0)
+		out.println("<a href=\"admin/admin.html\">afficher caddie("+((PanierListe)session.getAttribute("session.PanierListe")).Liste.size()+"Representations dans le panier)"+"</a></font><br></p>");
 	try{
 	    Utilisateur user = Utilitaires.Identification(this);
 	    out.println(Utilitaires.AffichageAchat(user));
@@ -92,8 +82,7 @@ public class RepresentationServlet extends HttpServlet {
     public String getServletInfo() {
         return "Reservation servlet";
     }
-    
-      /**
+    /**
      * HTTP POST request entry point.
      *
      * @param req	an HttpServletRequest object that contains the request 
