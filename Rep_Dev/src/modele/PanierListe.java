@@ -1,6 +1,6 @@
 package modele;
 import java.util.ArrayList;
-
+import modele.*;
 public class PanierListe {
     public ArrayList<Item> Liste;
     
