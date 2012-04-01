@@ -1,0 +1,18 @@
+package modele;
+import java.util.ArrayList;
+
+public class PanierListe{
+    Public ArrayList <Item> Liste;
+    
+    public Panier(){
+	Liste=new <Item>ArrayList();
+    }
+    
+    public String toString(){
+	String res="";
+	for((Item) item: Liste)
+	    res+=item.toString();
+	return res;
+    }
+    
+}
