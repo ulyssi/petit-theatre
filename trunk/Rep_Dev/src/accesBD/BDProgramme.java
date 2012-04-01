@@ -13,11 +13,10 @@ import exceptions.ExceptionConnexion;
 
 import modele.Spectacle;
 import modele.Utilisateur;
+import modele.Place;
 
 public class BDProgramme {
-
     public BDProgramme () {
-		
     }
     /**
      * retourne la liste des spectacles définies dans la bd
@@ -93,6 +92,33 @@ public class BDProgramme {
 	return res;
     }
 
+    public static Vector<Place> getPlacesDispo(Utilisateur user,int numS,String date)throws CategorieException, ExceptionConnexion {
+	Vector<Place> res= new Vector<Place>();
+	String requete ;
+	Statement stmt ;
+	ResultSet rs ;
+	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	//	insert into LESREPRESENTATIONS values ('101', TO_DATE('06/11/2009 20h','DD/MM/YYYY HH24"h"'));	
+	requete = "Select P.noPlace,P.noRang from LESREPRESENTATIONS R LESPLACES P where not exists";
+	requete=requete+"Select from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
+	requete=requete+ "and T.noPlace = P.noPlace and T.noRang=P.noRang";
+
+	try {
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    while (rs.next()) {
+		res.addElement(new Place(rs.getInt(1),rs.getInt(2))); 
+	    }
+	} catch (SQLException e) {
+	    throw new CategorieException (" Problème dans l'interrogation des Places disponibles.."
+					  + "Code Oracle " + e.getErrorCode()
+					  + "Message " + e.getMessage());
+	}
+	BDConnexion.FermerTout(conn, stmt, rs);	
+	return res;
+    }
+
+
     // public static void addCategorie(Utilisateur user, String nom , int prix )
     // 	throws CategorieException, ExceptionConnexion {
     // 	String requete ;
@@ -114,11 +140,6 @@ public class BDProgramme {
     // 	BDConnexion.FermerTout(conn, stmt, rs);
 	
     // }
-
-
-
-
-
 
 
 }

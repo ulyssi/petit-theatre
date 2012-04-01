@@ -65,8 +65,8 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	    out.println("                                  jj/mm/aaaa");
 	    out.println("<br>");
 	    out.println("Date de la repr&eacute;sentation :");
-	    out.println("<input type=text size=2 name=jour>");
-	    out.println("<input type=text size=2 name=mois>");
+	    out.println("<input type=text size=1 name=jour>");
+	    out.println("<input type=text size=1 name=mois>");
 	    out.println("<input type=text size=2 name=annee>");
 	    // out.println("<br>");
 	    out.println("Heure de d&eacute;but de la repr&eacute;sentation :");

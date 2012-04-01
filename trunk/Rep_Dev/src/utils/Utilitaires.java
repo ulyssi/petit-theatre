@@ -20,6 +20,8 @@ import accesBD.BDConnexion;
 import modele.Utilisateur;
 import modele.Categorie;
 import modele.Spectacle;
+import modele.Place;
+
 import exceptions.ExceptionUtilisateur;
 import exceptions.ExceptionConnexion;
 import exceptions.CategorieException;
@@ -43,7 +45,6 @@ public class Utilitaires {
 	Vector<Spectacle> res = new Vector<Spectacle>();
 	String resultat ="";
 	    try {
-	
 		resultat=resultat+"Listes des Spectacles de la Saison<br>";
 		res = BDProgramme.getSpectacle(user);
 		if (res.isEmpty()) {
@@ -97,6 +98,35 @@ public class Utilitaires {
 		resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
 	    return resultat;	
     }
+
+
+
+    public static String ListerPlacesDispo(Utilisateur user,int numS,String date){
+	Vector<Place> res = new Vector<Place>();
+	String resultat ="";
+	try{
+	    resultat=resultat+"Liste des places disponible pour la représentation du "+date+" du spectacle "+numS+"<br>";
+	    res=BDProgramme.getPlacesDispo(user,numS,date);
+	    if(res.isEmpty()){
+		resultat=resultat+" Aucune places disponibles pour votre requete <br>";
+	    }
+	    else{
+		for (int i = 0; i < res.size(); i++) {
+		    resultat=resultat+"<br>" + res.elementAt(i);
+		}
+	    }
+	}
+	catch (CategorieException e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
+    }
+	catch (ExceptionConnexion e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
+	return resultat;
+}
+
+
+
+
 
     public static Utilisateur Identification(HttpServlet servletParent) throws ExceptionConnexion,
 						      ExceptionUtilisateur, IOException {
