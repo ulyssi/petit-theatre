@@ -1,5 +1,6 @@
 package modele;
 import java.util.ArrayList;
+import modele.*;
 
 public class Item{
     public Spectacle spectacle;
@@ -10,7 +11,7 @@ public class Item{
     public Item(Spectacle s , Representation r ){
 	spectacle=s; 
 	reprensentation=r;
-	lesPlaces= new <Place>ArrayList();
+	lesPlaces= new<Place> ArrayList();
     }
     public String toString(){
 	String res=""+spectacle.getNom()+" "+ spectacle.getNum()+"\n";
