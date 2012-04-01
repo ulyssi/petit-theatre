@@ -9,6 +9,12 @@ import java.io.IOException;
 import utils.Utilitaires;
 import modele.Utilisateur;
 
+import java.io.*;
+import java.util.Enumeration;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.util.ArrayList;
 
 /**
  * NouvelleRepresentation Servlet.
@@ -20,62 +26,86 @@ import modele.Utilisateur;
  */
 
 public class RepresentationServlet extends HttpServlet {
-
-    /**
-     * HTTP GET request entry point.
+    /* SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+     * THIS SOFTWARE OR ITS DERIVATIVES.
      *
-     * @param req	an HttpServletRequest object that contains the request 
-     *			the client has made of the servlet
-     * @param res	an HttpServletResponse object that contains the response 
-     *			the servlet sends to the client
-     *
-     * @throws ServletException   if the request for the GET could not be handled
-     * @throws IOException	 if an input or output error is detected 
-     *				 when the servlet handles the GET request
+     * CopyrightVersion 1.0
      */
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException, IOException
-    {
-	System.out.println("in\n");
-	String numS;
+    public void doGet (HttpServletRequest req, HttpServletResponse res)
+	throws ServletException, IOException {
 
-	ServletOutputStream out = res.getOutputStream();   
-	
+	//Get the session object
+	HttpSession session = req.getSession(true);
+	//Get the output stream
+	ServletOutputStream out = res.getOutputStream();
 	res.setContentType("text/html");
-	 out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	 out.println("<font color=\"#FFFFFF\"><h1> Lister les representation  </h1>");
-	
-	numS= req.getParameter("numS");
-	if (numS == null) {
-	    
-	    out.println("<font color=\"#FFFFFF\">Veuillez saisir le numero de spectacle");
-	    out.println("<P>");
-	    out.print("<form action=\"");
-	    out.print("RepresentationServlet\" ");
-	    out.println("method=POST>");
-	    out.println("Num&eacute;ro de spectacle :");
-	    out.println("<input type=text size= 5 name=numS>");
-	    out.println("<input type=submit>");
-	    out.println("</form>");
-	} else {	   
-	    try{
-		Utilisateur user = Utilitaires.Identification(this);
-		out.println(Utilitaires.listerRepresentations(user,Integer.parseInt(numS)));
-	    }
-	    catch(Exception e){
-		out.println("aaarrrrghhh<br>");
-		out.println(e.getMessage());
-	    }
-	}
 
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");
-	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Page d'accueil</a></p>");
+
+	out.println("<HEAD><TITLE>Reservation de tickets </TITLE></HEAD><BODY>");
+	out.println("<h1> Reservations de tickets </h1>"); 
+	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
+	out.println("<p align=\"Right\"><font face=\"Monotype Corsiva\"style=\"font-size: 16pt\">");
+
+	try{
+	    // Open the file that is the first 
+	    // command line parameter
+	    String relativeWebPath ="/WEB-INF/files/JAVASCRIPTPROG.txt";
+	    String absoluteDiskPath = this.getServletContext().getRealPath(relativeWebPath);
+	    File file = new File(absoluteDiskPath);
+	    FileInputStream fstream = new FileInputStream(file);
+	    // Get the object of DataInputStream
+	    DataInputStream in = new DataInputStream(fstream);
+	    BufferedReader br = new BufferedReader(new InputStreamReader(in));
+	    String strLine;
+	    //Read File Line By Line
+	    while ((strLine = br.readLine()) != null)   {
+		// Print the content on the console
+		out.println (strLine);
+	    }
+	    //Close the input stream
+	    in.close();
+	}catch (Exception e){//Catch exception if any
+	    out.println("Error: " + e.getMessage());
+	}
+	if(session.isNew()||((ArrayList)session.getAttribute("sessiontest.list"))!=null&&((ArrayList)session.getAttribute("sessiontest.list")).size()>0)
+	    out.println("<a href=\"admin/admin.html\">afficher caddie (vide)</a></font><br></p>");
+	else
+	    out.println("<a href=\"admin/admin.html\">afficher caddie("+((ArrayList)session.getAttribute("sessiontest.list")).size()+"Places)"+"</a></font><br></p>");
+	out.println("<br>Session ID: " + req.getRequestedSessionId());
+	out.println("New Session: " + session.isNew()+"<br>");
+	//JAVASCRIPT FUNCTION !
+	session.setAttribute("sessiontest.list", new ArrayList<String>());
+
+	
+          
+	// session.setAttribute("sessiontest.counter", ival);
+	// out.println("You have hit this page <b>" + ival + "</b> times.<p>");
+	// out.println("<h3>Request and Session Data:</h3>");
+	// out.println("New Session: " + session.isNew());
+	// out.println("<br>Session ID: " + req.getRequestedSessionId());
+	// out.println("<br>Valid Session ID: " + req.isRequestedSessionIdValid());
+	// out.println("<br>Session creation Time: " + session.getCreationTime());
+	// out.println("<br>Last Accessed Time: " + session.getLastAccessedTime());
+	// out.println("<br>Session ID in Request from Cookie: " + req.isRequestedSessionIdFromCookie());
+	// out.println("<br>Session ID in Request from URL: " + req.isRequestedSessionIdFromURL());
+	// out.println("<p>Reload the page to ensure that session tracking is working.");
+	
+	try{
+	    Utilisateur user = Utilitaires.Identification(this);
+	    out.println(Utilitaires.AffichageAchat(user));
+	}
+	catch(Exception e){
+	    out.println(e.getMessage());
+	}
 	out.println("</BODY>");
 	out.close();
-
     }
 
-    /**
+    public String getServletInfo() {
+        return "Reservation servlet";
+    }
+    
+      /**
      * HTTP POST request entry point.
      *
      * @param req	an HttpServletRequest object that contains the request 
@@ -91,30 +121,6 @@ public class RepresentationServlet extends HttpServlet {
 	throws ServletException, IOException
     {
 	doGet(req, res);
-    }
-
-
-    /**
-     * Returns information about this servlet.
-     *
-     * @return String information about this servlet
-     */
-
-    public String getServletInfo() {
-        return "donne les representations associé à un spectacle existant";
-    }
-
-    private void addRep(int date){
-	/*	try {
-	    //    BDRepresentation.addRepresentation(,nom,prix);
-	}
-	catch (CategorieException e) {
-	    IO.afficherln("Erreur dans l'ajout de la categorie" + e.getMessage());
-	}
-	catch (ExceptionConnexion e) {
-	    IO.afficherln(" Erreur dans l'ajout de la categorie: " + e.getMessage());
-	}
-	*/
     }
 
 }

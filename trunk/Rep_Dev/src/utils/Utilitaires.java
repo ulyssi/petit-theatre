@@ -39,6 +39,34 @@ public class Utilitaires {
 
     public Utilitaires() {
     }
+     public static String AffichageAchat(Utilisateur user) throws IOException {
+	  Vector<Spectacle> res = new Vector<Spectacle>();
+	  String resultat ="";
+	  resultat=resultat+"<div margin-left:20px;\">\n";
+	  resultat=resultat+"<p><strong>Liste des Representations Disponibles </strong></p>\n";
+	  resultat+="<div class=\"menu_list\" id=\"secondpane\">\n";
+	    try {
+		res = BDProgramme.getSpectacle(user);
+		if (res.isEmpty()) {
+		    resultat=resultat+"</div>";
+		} else {
+		    for (int i = 0; i < res.size(); i++) {
+			resultat+="<p class=\"menu_head\">"+ res.elementAt(i).getNum() + " :  "+res.elementAt(i).getNom()+"</p>\n";
+			resultat+="<div class=\"menu_body\">\n";
+			resultat+="<a href=\"#\">Link-1</a>\n";
+			resultat+="<a href=\"#\">Link-2</a>\n";
+			resultat+= "</div>\n";
+		    }
+		}
+	
+	    } catch (CategorieException e) {
+		resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
+	    } catch (ExceptionConnexion e) {
+		resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
+	    resultat+="</div>\n";
+	    resultat+="</div>\n";
+	    return resultat;
+    }
     
     
     public static String AfficherProgramme(Utilisateur user) throws IOException {
