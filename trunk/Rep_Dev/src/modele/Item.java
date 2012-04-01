@@ -10,7 +10,7 @@ public class Item{
     public Item(Spectacle s , Representation r ){
 	spectacle=s; 
 	reprensentation=r;
-	lesPlaces= new<Place> ArrayList();
+	lesPlaces= new <Place>ArrayList();
     }
     public String toString(){
 	String res=""+spectacle.getNom()+" "+ spectacle.getNum()+"\n";
