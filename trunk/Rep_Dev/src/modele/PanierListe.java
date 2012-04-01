@@ -8,6 +8,9 @@ public class PanierListe {
 	Liste=new <Item>ArrayList();
     }
     
+    public int getSize(){
+	return Liste.size();
+    }
     public String toString(){
 	String res="";
 	for(Item item : Liste)
