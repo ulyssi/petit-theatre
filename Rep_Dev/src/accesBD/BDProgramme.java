@@ -11,6 +11,7 @@ import java.util.Date;
 import exceptions.CategorieException;
 import exceptions.ExceptionConnexion;
 
+import modele.Representation;
 import modele.Spectacle;
 import modele.Utilisateur;
 import modele.Place;
@@ -70,8 +71,8 @@ public class BDProgramme {
 	
     }
 
-    public static Vector<Date> getRepresentation(Utilisateur user,int numS)throws CategorieException, ExceptionConnexion {
-	Vector<Date> res= new Vector<Date>();
+    public static Vector<Representation>  getRepresentation(Utilisateur user,int numS)throws CategorieException, ExceptionConnexion {
+	Vector<Representation> res= new Vector<Representation>();
 	String requete ;
 	Statement stmt ;
 	ResultSet rs ;
@@ -82,7 +83,8 @@ public class BDProgramme {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    while (rs.next()) {
-		res.addElement(rs.getDate(1)); 
+		res.addElement(new Representation(numS, rs.getDate(1),rs.getTime(1)));
+	
 	    }
 	} catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des representation.."

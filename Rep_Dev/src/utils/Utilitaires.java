@@ -102,27 +102,27 @@ public class Utilitaires {
     
 
     public static String listerRepresentations(Utilisateur user,int numS){
-	Vector<Date> res = new Vector<Date>();
+	Vector<Representation> res = new Vector<Representation>();
 	String resultat ="";
-	    try {
-		
-		res = BDProgramme.getRepresentation(user,numS);
-		if (res.isEmpty()) {
-		    resultat=resultat+" Aucune repr&eacute;sentation disponible<br>";
-		} else {
-		    for (int i = 0; i < res.size(); i++) {
-			resultat=resultat + res.elementAt(i)+"<br>";
-		    }
+	try {
+	    
+	    res = BDProgramme.getRepresentation(user,numS);
+	    if (res.isEmpty()) {
+		resultat=resultat+" Aucune repr&eacute;sentation disponible<br>";
+	    } else {
+		for (int i = 0; i < res.size(); i++) {//<a href="servlet/HelloToServlet?firstname=bork&lastname=runil">Programme</a><br>
+		    resultat=resultat + res.elementAt(i)+"<br>";
 		}
-		
-	    } catch (CategorieException e) {
-		resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
-	    } catch (ExceptionConnexion e) {
-		resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
+	    }
+	    
+	} catch (CategorieException e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
+	} catch (ExceptionConnexion e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
 	    return resultat;	
     }
-
-
+    
+    
 
     public static String ListerPlacesDispo(Utilisateur user,int numS,String date){
 	Vector<Place> res = new Vector<Place>();
