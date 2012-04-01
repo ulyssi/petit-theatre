@@ -25,4 +25,10 @@ public class Place {
 	public void setNoPlace (int p) {
 		this.noPlace = p;
 	}
+
+    public String toString(){
+	String rslt;
+	rslt="rang: "+ this.noRang+"  place: "+this.noPlace;
+	return rslt;
+    }
 }
