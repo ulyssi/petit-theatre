@@ -12,8 +12,8 @@ $(document).ready(function()
 	//slides the element with class "menu_body" when mouse is over the paragraph
 	$("#secondpane p.menu_head").mouseover(function()
     {
-	     $(this).css({backgroundImage:"url(/images/down.png)"}).next("div.menu_body").slideDown(500).siblings("div.menu_body").slideUp("slow");
-         $(this).siblings().css({backgroundImage:"url(/images/left.png)"});
+	   $(this).css({backgroundImage:"url(/images/down.png)"}).next("div.menu_body").slideDown(500).siblings("div.menu_body").slideUp("slow");
+         $(this).siblings().css({backgroundImage:"url()"});
 	});
 });
 </script>
@@ -30,8 +30,8 @@ body {
 	cursor: pointer;
 	position: relative;
 	margin:1px;
-    font-weight:bold;
-    background: #eef4d3 url(/images/left.png) center right no-repeat;
+        font-weight:bold;		
+        background: #eef4d3 url(/images/left.png) center right no-repeat;
 }
 .menu_body {
 	display:none;
@@ -45,9 +45,39 @@ body {
   text-decoration:none;
 }
 .menu_body a:hover{
-  color: #000000;
+  color: #EFEFEF;
   text-decoration:underline;
   }
-</style>
 
+
+
+/* HTML button CSS
+---------------------------------------*/
+
+@media screen{
+
+form{
+margin:0;
+padding:0;
+}
+.link button{
+margin:0;
+padding:0;
+border:0;
+background:0;
+font-size:1em;
+color:#00f;
+text-decoration:underline;
+cursor:pointer;
+}
+.link button:hover,
+.link button:focus{
+color:#c00;
+text-decoration:underline;
+}
+
+}
+
+
+</style>
 
