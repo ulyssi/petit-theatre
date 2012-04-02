@@ -111,11 +111,11 @@ public class Utilitaires {
 		resultat=resultat+" Aucune repr&eacute;sentation disponible<br>";
 	    } 
 	    else {
-		resultat+="should give"+res.size()+"answers<br>";
-		/*	for (int i = 0; i < res.size(); i++) {
+	
+		for (int i = 0; i < res.size(); i++) {
 		    Representation rep=res.elementAt(i);
-		    resultat="<a href=\"NoPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\">"+rep+"</a><br>";
-		    }*/
+		    resultat+="<a href=\"NoPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\">"+rep+"</a><br>";
+		}
 	    }
 	    
 	} catch (CategorieException e) {
