@@ -77,15 +77,18 @@ public class BDProgramme {
 	Statement stmt ;
 	ResultSet rs ;
 	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
-	//	insert into LESREPRESENTATIONS values ('101', TO_DATE('06/11/2009 20h','DD/MM/YYYY HH24"h"'));	
+
 	requete = "Select dateRep from LESREPRESENTATIONS R where R.numS="+numS;
 	try {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
+	 
 	    while (rs.next()) {
 		res.addElement(new Representation(numS, rs.getDate(1),rs.getTime(1)));
 	
 	    }
+
+	 
 	} catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des representation.."
 					  + "Code Oracle " + e.getErrorCode()

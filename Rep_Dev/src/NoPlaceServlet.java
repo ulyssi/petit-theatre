@@ -55,7 +55,8 @@ public class NoPlaceServlet extends HttpServlet {
 	moisS= req.getParameter("mois");
 	anneeS= req.getParameter("annee");
 	heureS= req.getParameter("heure");
-	if (numS == null|jourS== null|moisS== null|anneeS== null| heureS== null) {
+	String DateS=req.getParameter("DateS");
+	if ((numS == null| jourS== null|moisS== null|anneeS== null| heureS== null)&&(numS==null|| DateS==null)) {
 	    out.println("<font color=\"#FFFFFF\"><h1> Lister les places disponible pour une representation donn&eacute;e </h1>");
 	    out.println("<font color=\"#FFFFFF\">Veuillez saisir le num&eacute;ro de spectacle");
 	    out.println("<P>");
@@ -78,7 +79,12 @@ public class NoPlaceServlet extends HttpServlet {
 	    try{
 		out.println("<font color=\"#FFFFFF\"><h1>Resultats: </h1>");
 		String date="";
-		date=date+jourS+"/"+moisS+"/"+anneeS+" "+heureS+"h";
+		if(DateS!=null){
+		    date=DateS;
+		}
+		else{
+		    date=date+jourS+"/"+moisS+"/"+anneeS+" "+heureS+"h";
+		}
 		Utilisateur user = Utilitaires.Identification(this);
 		out.println(Utilitaires.ListerPlacesDispo(user,Integer.parseInt(numS),date));
 	    }
