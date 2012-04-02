@@ -5,12 +5,39 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    version="2.5">
 
-  <display-name>Servlets</display-name>
-  <description> Servlets </description>- 
+<!-- JSPC servlet mappings start -->
 
-<!-- 
- Define servlets that are included in the Theater application 
---> 
+<!--   Commenting out so I can change the index.jsp page -->
+
+<!-- <servlet> -->
+<!-- <servlet-name>myjsp</servlet-name> -->
+<!-- <jsp-file>/myjsp.jsp</jsp-file> -->
+<!-- <init-param> -->
+<!-- <param-name>hello</param-name> -->
+<!-- <param-value>test</param-value> -->
+<!-- </init-param> -->
+<!-- </servlet> -->
+ 
+<!-- <servlet-mapping> -->
+<!-- <servlet-name>myjsp</servlet-name> -->
+<!-- <url-pattern>/myjsp</url-pattern> -->
+<!-- </servlet-mapping> -->
+<display-name>Servlets</display-name>
+<description> Servlets </description>-
+
+ <!-- Define servlets that are included in the Theater application   -->
+
+
+-<servlet>
+<servlet-name>JSP</servlet-name>
+<jsp-file>/index.jsp</jsp-file>
+</servlet>
+
+-<servlet-mapping>
+<servlet-name>JSP</servlet-name>
+<url-pattern>/servlet/JSP</url-pattern>
+</servlet-mapping>
+
 
 
 - <servlet> 
@@ -67,5 +94,9 @@
 <servlet-name>HelloToServlet</servlet-name> 
 <url-pattern>/servlet/HelloToServlet</url-pattern> 
 </servlet-mapping>
+
+
+
+
 
 </web-app>
