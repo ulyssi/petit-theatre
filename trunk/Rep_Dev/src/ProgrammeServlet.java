@@ -98,7 +98,7 @@ public class ProgrammeServlet extends HttpServlet {
 		    Arrays.fill(expand,0); 
 		    session.putValue("expand", expand);
 		    for (int i = 0; i < rslt.size(); i++) {
-			out.println("<INPUT TYPE=SUBMIT NAME=LR"+rslt.elementAt(i).getNum()+" VALUE="+"\"+\" >   goff "+rslt.elementAt(i).getNom()+ "<br>");
+			out.println("<INPUT TYPE=SUBMIT NAME=LR"+rslt.elementAt(i).getNum()+" VALUE="+"\"+\" >  "+rslt.elementAt(i).getNom()+ "<br>");
 			
 		    }
 		}

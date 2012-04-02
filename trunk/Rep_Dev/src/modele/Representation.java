@@ -11,6 +11,7 @@ public class Representation {
 		this.date = d;
 		calendar= Calendar.getInstance();
 		calendar.setTime(d);
+		num=n;
     }
     
     public Representation (int n, Date d,Time t) {
@@ -20,6 +21,7 @@ public class Representation {
 		calendar.setTime(d);
 		tmp.setTime(t);
 		calendar.set(Calendar.HOUR_OF_DAY,tmp.get(Calendar.HOUR_OF_DAY));
+		num=n;
     }
 
 
@@ -34,6 +36,8 @@ public class Representation {
 	return this.date;
     }
     
+   
+    
     public void setNum (int n) {
 	this.num= n;
     }
@@ -44,7 +48,7 @@ public class Representation {
 
     public String toString(){
 	String rslt="";
-	rslt="date: "+calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)+"/"+calendar.get(Calendar.YEAR)+"  "+calendar.get(Calendar.HOUR_OF_DAY); 
+	rslt=calendar.get(Calendar.DAY_OF_MONTH)+"/"+(calendar.get(Calendar.MONTH)+1)+"/"+calendar.get(Calendar.YEAR)+"  "+calendar.get(Calendar.HOUR_OF_DAY)+"h"; 
 	return rslt;
     }
     

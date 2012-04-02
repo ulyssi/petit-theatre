@@ -109,10 +109,13 @@ public class Utilitaires {
 	    res = BDProgramme.getRepresentation(user,numS);
 	    if (res.isEmpty()) {
 		resultat=resultat+" Aucune repr&eacute;sentation disponible<br>";
-	    } else {
-		for (int i = 0; i < res.size(); i++) {//<a href="servlet/HelloToServlet?firstname=bork&lastname=runil">Programme</a><br>
-		    resultat=resultat + res.elementAt(i)+"<br>";
-		}
+	    } 
+	    else {
+		resultat+="should give"+res.size()+"answers<br>";
+		/*	for (int i = 0; i < res.size(); i++) {
+		    Representation rep=res.elementAt(i);
+		    resultat="<a href=\"NoPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\">"+rep+"</a><br>";
+		    }*/
 	    }
 	    
 	} catch (CategorieException e) {
