@@ -75,9 +75,7 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	    out.println("<input type=submit>");
 	    out.println("</form>");
 	} else {
-	    if(numS.compareTo("fuck!")==0)
-		out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau_pr.jpg\">");
-	    else
+	  
 		out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	    // TO DO
 	    // Transformation des parametres vers les types adequats.
