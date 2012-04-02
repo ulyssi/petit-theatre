@@ -71,13 +71,11 @@ public class ProgrammeServlet extends HttpServlet {
 
 	out.println("<FORM METHOD=POST>");	
 	if(session.isNew()) {
-	    out.println("<p><i><font color=\"#FFFFFF\"> NEW</i></p>");
+	   
 	    session.putValue("expand", null);
 	    session.putValue("rslt", null);
 	}
-	else{
-	    out.println("<p><i><font color=\"#FFFFFF\">Not NEW</i></p>");
-	}
+
 	int[] expand = (int[])session.getValue("expand");
 	Vector<Spectacle> rslt = (Vector<Spectacle>)session.getValue("rslt");
 	try{
@@ -104,7 +102,7 @@ public class ProgrammeServlet extends HttpServlet {
 		}
 	    }
 	    else{
-		out.println("<p><i><font color=\"#FFFFFF\">really not NEW</i></p>");
+	
 		for (int i = 0; i < rslt.size(); i++) {
 		    if(req.getParameter("LR"+rslt.elementAt(i).getNum())!=null){
 			expand[i]=1;
