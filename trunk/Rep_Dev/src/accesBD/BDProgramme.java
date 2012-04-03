@@ -78,7 +78,27 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);	
 	
     }
-
+    
+        public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
+	    throws CategorieException, ExceptionConnexion {
+	    String res="";
+	    String requete ;
+	    Statement stmt ;
+	    ResultSet rs ;
+	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    requete = "insert into panier values ('"+num+"', TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"'), '"+place+"','"+rang+"' ,'"+login+"')";
+	    try {
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery(requete);
+		res+="la place a bien ete enregistree dans la base <br>";
+	    } catch (SQLException e) {
+	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
+					  + "Code Oracle " + e.getErrorCode()
+					  + "Message " + e.getMessage());
+	    }
+	    BDConnexion.FermerTout(conn, stmt, rs);	
+	    return res;
+    }
     public static Vector<Representation>  getRepresentation(Utilisateur user,int numS)throws CategorieException, ExceptionConnexion {
 	Vector<Representation> res= new Vector<Representation>();
 	String requete ;
@@ -296,8 +316,7 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
-
-        public static String getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
+        public static PanierListe getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;
 	ResultSet rs ;
@@ -305,17 +324,21 @@ public class BDProgramme {
 	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
 	String res="";
 	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
-	requete = "Select numS ,dateRep , noPlace,noRang,identifian from panier where \'"+login+"\'=identifian";
+	requete = "Select numS ,dateRep , noPlace,noRang,identifian  from panier  where \'"+login+"\'=identifian";
 	
 	try {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    res+=requete;
+	    Item i =null;
 	    while (rs.next()) {
-		// if(!p.In(rs.getInt(1),rs.getString(2)))
-		//    p.Liste.add(new Item(new Spectacle (" ",rs.getInt(1)), new Representation(rs.getInt(1),s.parse(rs.getString(2)))));
-		// p.addPlace(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-		res+="<br> AAAAAAAAH "+rs.getInt(1);   
+		Representation r =  new Representation(rs.getInt(1), rs.getDate(2),rs.getTime(2));
+		if(!p.In(rs.getInt(1),r.toString())){
+		    i = new Item(new Spectacle (" ",rs.getInt(1)), new Representation(rs.getInt(1), rs.getDate(2),rs.getTime(2)));
+		    p.Liste.add(i);
+		}
+		if(i!=null)
+		    p.addPlace(rs.getInt(1),i.representation.getDate(),rs.getInt(3),rs.getInt(4));
 		
 	    }
 	    BDConnexion.FermerTout(conn, stmt, rs);	
@@ -324,7 +347,7 @@ public class BDProgramme {
 	    res+=e.getMessage();
 	}
 
-	return res;
+	return p;
     }
 
 

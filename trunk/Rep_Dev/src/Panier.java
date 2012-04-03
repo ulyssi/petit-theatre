@@ -30,7 +30,7 @@ public class Panier extends HttpServlet {
     public void doGet (HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException {
 	HttpSession session = req.getSession(true);
-
+	
 	ServletOutputStream out = res.getOutputStream();
 	res.setContentType("text/html");
 	
@@ -50,6 +50,13 @@ public class Panier extends HttpServlet {
 	    if (place!=null && rang != null && num!=null&&date!=null) {
 		if (session.getAttribute("session.PanierListe")!=null){ 
 		    ((PanierListe)session.getAttribute("session.PanierListe")).addPlace(num,date,place,rang);
+		    if((String)session.getAttribute("session.log")!=null){
+			//utilisateur loggé
+			out.println("votre panier est enregistre");
+			Utilisateur user = Utilitaires.Identification(this);
+			out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),num,date,place,rang));
+		    }
+		    
 		}
 	    }
 	    if (nom != null&& num!=null&&date!=null) {

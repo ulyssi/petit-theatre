@@ -69,20 +69,19 @@ public class Utilitaires {
 	    resultat+="</div>\n";
 	    return resultat;
     }
-    
-    
-    public static String getPanier(Utilisateur user,String login) throws IOException {
-	//PanierListe p =null;
-	String p="";
+        public static PanierListe  getPanier(Utilisateur user,String login) throws IOException {
+	PanierListe p =null;
+	
 	try {
 	    p = BDProgramme.getPanier(user,login);
-				
+	    
 	    }
 	catch (CategorieException e) {
 	} catch (ExceptionConnexion e) {
 	}
 	return p;
     }
+
 
 
     
@@ -256,6 +255,22 @@ public class Utilitaires {
 	    throw new ExceptionConnexion("Connexion impossible\n");
 	}
 	return user;
+    }
+        public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang){
+	String res = ""; 
+	    
+	try {
+	    BDProgramme.enregistrerPlacePanier(user,login,num,date,place,rang);
+	    
+	}
+	catch (CategorieException e) {
+	    res+=e.getMessage();
+	} catch (ExceptionConnexion e) {
+	    res+= e.getMessage();
+	}
+	return res;
+  
+	    
     }
 
 }

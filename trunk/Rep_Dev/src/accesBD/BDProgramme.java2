@@ -55,35 +55,25 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
- 
-    public static String getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
-	String requete ;
-	Statement stmt ;
-	ResultSet rs ;
-	PanierListe p= new PanierListe();
-	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
-	String res="";
-	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
-	requete = "Select numS ,dateRep , noPlace,noRang,identifian from panier where \'"+login+"\'=identifian";
-	
-	try {
-	    stmt = conn.createStatement();
-	    rs = stmt.executeQuery(requete);
-	    res+=requete;
-	    while (rs.next()) {
-		// if(!p.In(rs.getInt(1),rs.getString(2)))
-		//    p.Liste.add(new Item(new Spectacle (" ",rs.getInt(1)), new Representation(rs.getInt(1),s.parse(rs.getString(2)))));
-		// p.addPlace(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
-		res+="<br> AAAAAAAAH "+rs.getInt(1);   
-		
+        public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
+	    throws CategorieException, ExceptionConnexion {
+	    String res="";
+	    String requete ;
+	    Statement stmt ;
+	    ResultSet rs ;
+	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    requete = "insert into panier values ('"+num+"', TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"'), '"+place+"','"+rang+"' ,'"+login+"')";
+	    try {
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery(requete);
+		res+="la place a bien ete enregistree dans la base <br>";
+	    } catch (SQLException e) {
+	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
+					  + "Code Oracle " + e.getErrorCode()
+					  + "Message " + e.getMessage());
 	    }
 	    BDConnexion.FermerTout(conn, stmt, rs);	
-	}
-	catch (Exception e) {
-	    res+=e.getMessage();
-	}
-
-	return res;
+	    return res;
     }
 
 
@@ -229,6 +219,38 @@ public class BDProgramme {
 	
 	return res;
     }
+
+
+    public static Place  getPlaceZone(Utilisateur user,Representation R,int zone){
+	
+	String requete ;
+	Statement stmt=null ;
+	ResultSet rs=null ;
+	Connection conn=null;
+	Place rslt=null;
+	
+	
+	
+	
+	requete = "Select P.noPlace, P.noRang from LESPLACES P, LESREPRESENTATIONS R where ";
+	requete=requete+"R.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"') and ";
+	requete=requete+"P.numZ="+zone +"not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"')";
+	requete=requete+ " and T.noPlace = P.noPlace and T.noRang=P.noRang)";
+	try{
+	    conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    if(rs.next())
+		rslt=new Place(rs.getInt(2),rs.getInt(1));
+	}
+	catch(Exception e){
+	    rslt= null;
+	}
+	BDConnexion.FermerTout(conn, stmt, rs);
+	return rslt;
+    }
+    
+    
     public static Vector<ProgrammeListe> getProgramListes(Utilisateur user)
 	throws CategorieException, ExceptionConnexion {
 	Vector<ProgrammeListe> res = new Vector<ProgrammeListe>();
@@ -269,5 +291,40 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
+
+        public static PanierListe getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
+	String requete ;
+	Statement stmt ;
+	ResultSet rs ;
+	PanierListe p= new PanierListe();
+	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
+	String res="";
+	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	requete = "Select numS ,dateRep , noPlace,noRang,identifian  from panier  where \'"+login+"\'=identifian";
+	
+	try {
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    res+=requete;
+	    Item i =null;
+	    while (rs.next()) {
+		Representation r =  new Representation(rs.getInt(1), rs.getDate(2),rs.getTime(2));
+		if(!p.In(rs.getInt(1),r.toString())){
+		    i = new Item(new Spectacle (" ",rs.getInt(1)), new Representation(rs.getInt(1), rs.getDate(2),rs.getTime(2)));
+		    p.Liste.add(i);
+		}
+		if(i!=null)
+		    p.addPlace(rs.getInt(1),i.representation.getDate(),rs.getInt(3),rs.getInt(4));
+		
+	    }
+	    BDConnexion.FermerTout(conn, stmt, rs);	
+	}
+	catch (Exception e) {
+	    res+=e.getMessage();
+	}
+
+	return p;
+    }
+
 
 }
