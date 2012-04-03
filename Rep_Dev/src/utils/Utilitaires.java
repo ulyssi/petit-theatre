@@ -198,7 +198,11 @@ public class Utilitaires {
 	return resultat;
     }
 
-
+    public static String ReserverRepresentation(Representation R,int numZ){
+	String rslt="";
+	//rslt+=BDProgramme.ReserverRepresentation(user,R,numZ);
+	return rslt;
+    }
 
     public static String ValiderPanier(Utilisateur user,PanierListe p){
 	String res= ""; 

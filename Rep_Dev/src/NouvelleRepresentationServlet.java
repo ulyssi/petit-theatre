@@ -13,6 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import java.text.ParseException;
+import java.lang.NumberFormatException;
+
 /**
  * NouvelleRepresentation Servlet.
  *
@@ -55,19 +58,27 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	anneeS		= req.getParameter("annee");
 	Date date=null;
 	Representation rep=null;
+	int noSpec;
 	heureS	= req.getParameter("heure");
 	if (numS != null && jourS != null && moisS!=null && anneeS!=null && heureS != null) {
 	    try{
+		
+		noSpec=Integer.parseInt(numS);
 		date=sdf.parse(jourS+moisS+anneeS+anneeS);
 		Calendar now=Calendar.getInstance();
 		Calendar tmp=Calendar.getInstance();
 		tmp.setTime(date);
 		if(now.after(tmp))
 		    {out.println("Erreur:la date est passée<br> ");
+			out.println("Erreur: le num&eacute;ro de spectacle doit etre donne par un entier<br> ");
 			date=null;
 		}
 	    }
-	    catch (Exception e){out.println("Erreur: Format de date erron&eacute;<br> ");
+	    catch(NumberFormatException e){
+		out.println("Erreur: le num&eacute;ro de spectacle doit etre donne par un entier<br> ");
+		date=null;
+	    }
+	    catch (ParseException e){out.println("Erreur: Format de date erron&eacute;<br> ");
 		date=null;
 	    }
 
