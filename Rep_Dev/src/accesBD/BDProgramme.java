@@ -134,12 +134,12 @@ public class BDProgramme {
 	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	    //verification de donnees
 	    requete = "Select P.noPlace, P.noRang from LESTICKETS where ";
-	    for(Item item : p.Liste)
-		for(Place p : item.lesPlaces){
-		    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
-		    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang";
-	    }
-	}
+	    // for(Item item : p.Liste)
+	    // 	for(Place p : item.lesPlaces){
+	    // 	    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
+	    // 	    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang";
+	    // }
+		}
 	catch(Exception e ){
 	    res = "erreur" ;
 	}
