@@ -86,11 +86,11 @@ public class BDProgramme {
 	    Statement stmt ;
 	    ResultSet rs ;
 	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
-	    requete = "insert into panier values ('"+num+"', TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"'), '"+place+"','"+rang+"' ,'"+login+"')";
+	    requete = "DELETE FROM panier where numS='"+num+"'and TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')=dateRep and '"+place+"'=NOPLACE   and '"+rang+"'=NORANG and '"+login+"'=identifian    ";
 	    try {
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(requete);
-		res+="";
+		res+=requete;
 	    } catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
 					  + "Code Oracle " + e.getErrorCode()

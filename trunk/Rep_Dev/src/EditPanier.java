@@ -69,7 +69,7 @@ public class EditPanier extends HttpServlet {
 		    p.Liste.get(ti).lesPlaces.remove(tj);
 		if(session.getAttribute("session.PanierListe")!=null){
 		    try{  Utilisateur user = Utilitaires.Identification(this);
-		    Utilitaires.retirerPlacePanier(user,(String)session.getAttribute("session.log"),num,date,place2,rang);
+			out.println(Utilitaires.retirerPlacePanier(user,(String)session.getAttribute("session.log"),num,date,place2,rang));
 		    }
 		    catch (Exception e){
 			out.println(e.getMessage());}
