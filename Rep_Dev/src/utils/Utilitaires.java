@@ -71,6 +71,21 @@ public class Utilitaires {
     }
     
     
+    public static String getPanier(Utilisateur user,String login) throws IOException {
+	//PanierListe p =null;
+	String p="";
+	try {
+	    p = BDProgramme.getPanier(user,login);
+				
+	    }
+	catch (CategorieException e) {
+	} catch (ExceptionConnexion e) {
+	}
+	return p;
+    }
+
+
+    
     public static Vector<Spectacle> getProgramme(Utilisateur user) throws IOException {
 	Vector<Spectacle> res = new Vector<Spectacle>();
 	String resultat ="";
