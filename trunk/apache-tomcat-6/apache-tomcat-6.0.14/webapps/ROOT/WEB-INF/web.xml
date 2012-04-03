@@ -72,6 +72,19 @@
 <servlet-class>Panier</servlet-class> 
 </servlet>
 
+
+- <servlet> 
+<servlet-name>EditPanier</servlet-name> 
+<servlet-class>EditPanier</servlet-class> 
+</servlet>
+
+-<servlet-mapping>
+<servlet-name>EditPanier</servlet-name>
+<url-pattern>/servlet/EditPanier</url-pattern>
+</servlet-mapping>
+
+
+
 - <servlet> 
 <servlet-name>NoPlaceServlet</servlet-name> 
 <servlet-class>NoPlaceServlet</servlet-class> 
