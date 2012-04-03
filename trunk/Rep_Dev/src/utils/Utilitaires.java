@@ -213,14 +213,14 @@ public class Utilitaires {
 	return resultat;
     }
 
-    public static String getPlaceZone(Utilisateur user,Representation R,int numZ){
+    /*   public static String getPlaceZone(Utilisateur user,Representation R,int numZ){
 	String rslt="";
 	Place P=BDProgramme.getPlaceZone(user,R,numZ);
 	if(P==null){
 	    rslt="aucun resultats associ&eacute; &agrave; la representation du "+R+" ou &agrave la zone"+numZ;	    
 	}
 	return rslt;
-    }
+	}*/
 
     public static String ValiderPanier(Utilisateur user,PanierListe p){
 	String res= ""; 

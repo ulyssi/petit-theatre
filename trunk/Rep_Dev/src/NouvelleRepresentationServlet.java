@@ -93,7 +93,7 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	    out.println("Num&eacute;ro de spectacle :");
 	    out.println("<input type=text size=20 name=numS>");
 	    out.println("<br>");
-	    out.println("                                  jj/mm/aaaa");
+	    out.println("                                  jj/mm/aaaa HHh");
 	    out.println("<br>");
 	    out.println("Date de la repr&eacute;sentation :");
 	    out.println("<input type=text size=13 name=daterep>");

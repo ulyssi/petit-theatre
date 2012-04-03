@@ -4,9 +4,12 @@ import java.io.IOException;
 import utils.Utilitaires;
 import modele.Utilisateur;
 import modele.Representation;
+import modele.Spectacle;
+import modele.Place;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import accesBD.BDProgramme;
 
 import java.text.ParseException;
 import java.lang.NumberFormatException;
@@ -45,7 +48,7 @@ public class ReserverPlaceServlet extends HttpServlet {
 	String numS;
 	String numZ;
 	ServletOutputStream out = res.getOutputStream();   
-	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH");
+	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH'h'");
 	res.setContentType("text/html");
 
 	out.println("<HEAD><TITLE> Ajouter une nouvelle representation </TITLE></HEAD>");
@@ -53,8 +56,9 @@ public class ReserverPlaceServlet extends HttpServlet {
 	out.println("<font color=\"#FFFFFF\"><h1> Ajouter une nouvelle repr&eacute;sentation </h1>");
 
 	numZ=(String)session.getValue("numZ");
+		
 	if(numZ==null)
-	    numZ            =req.getParameter("numZ");
+	    numZ =req.getParameter("numZ");
 	daterep=req.getParameter("daterep");
 	numS=req.getParameter("numS");
 	
@@ -92,6 +96,8 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    catch (ParseException e){out.println("Erreur: Format de date erron&eacute;<br> ");
 		date=null;
 	    }
+	}
+	if(numZ!=null){
 	    try{
 		noZone=Integer.parseInt(numZ);	
 	    }
@@ -121,6 +127,11 @@ public class ReserverPlaceServlet extends HttpServlet {
 	   
 	} 
 	if(numZ==null){
+
+	    if(rep!=null){
+		out.print("<form action=\"");
+		out.print("ReserverPlaceServlet\" ");
+	    }
 	    out.println("num&eacute;ro de zone <br>");
 	
 	    out.println("<input type=text size=1 name=numZ>");
@@ -137,31 +148,75 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    session.putValue("numZ",null);
 	    session.putValue("rep",null);
 	    try{
-		Calendar now=Calendar.getInstance();
-		 rep=new Representation(Integer.parseInt(numS),date);
+	
+		
 		Utilisateur user = Utilitaires.Identification(this);
-		out.println(Utilitaires.getPlaceZone(user,rep,noZone));
+		Place P=BDProgramme.getPlaceZone(user,rep,noZone);
+		String nom= BDProgramme.getName(user,noSpec);
+		
+		if(P==null)
+		    out.println("<p><i><font color=\"#FFFFFF\">aucune place trouv&eacute</i></p>");
+		else{
+		    out.println(P.toString());
+
+
+		    // if (session.getAttribute("session.PanierListe")!=null){ 
+		    // 	//utilisateur loggé
+		    // 	if(!((PanierListe)session.getAttribute("session.PanierListe")).In(Integer.toString(noSpec),rep.getDate()))
+		    // 	    ((PanierListe)session.getAttribute("session.PanierListe")).Liste.add(new Item(new Spectacle (nom,Integer.toString(noSpec)), rep));
+			
+		    // 	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang());
+			
+		    // 	if((String)session.getAttribute("session.log")!=null){
+			    
+		    // 	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),P.getNoPlace(),P.getNoRang()));
+		    // 	}
+						
+		    // }
+		    // else{
+		    // 	PanierListe p =new PanierListe();	
+		    // 	p.Liste.add(new Item(new Spectacle (new String(nom),Integer.toString(noSpec)), rep));
+		    // 	session.setAttribute("session.PanierListe",p);		
+		    // 	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang());
+		    // 	if((String)session.getAttribute("session.log")!=null){
+		    // 	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang()));
+		    // 	}
+
+		}
+		
+	   
+		
+		
+		
+
+
+
+
+
+
+
+
 		
 	    }
 	    catch(Exception e){
 		out.println(e.getMessage());
 	    }
-	  
-	    out.println("<p><i><font color=\"#FFFFFF\"> you entered n:"+rep+"</i></p>");
-	 
+	    
+	    //  out.println("<p><i><font color=\"#FFFFFF\"> you entered n:"+rep+"</i></p>");
+	    
 	}
 	else{
 	    out.println("<input type=submit>");
 	    out.println("</form>");
 	}
-
+	
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/index.html\">Page d'accueil</a></p>");
 	out.println("</BODY>");
 	out.close();
-
+	
     }
-
+    
     /**
      * HTTP POST request entry point.
      *
