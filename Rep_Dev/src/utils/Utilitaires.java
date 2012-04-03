@@ -272,5 +272,21 @@ public class Utilitaires {
   
 	    
     }
+    public static String retirerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang){
+	String res = ""; 
+	
+	try {
+	    BDProgramme.retirerPlacePanier(user,login,num,date,place,rang);
+	    
+	}
+	catch (CategorieException e) {
+	    res+=e.getMessage();
+	} catch (ExceptionConnexion e) {
+	    res+= e.getMessage();
+	}
+	return res;
+	
+	    
+    }
 
 }

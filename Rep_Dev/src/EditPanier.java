@@ -3,6 +3,11 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import modele.*;
+import utils.Utilitaires;
+import modele.Utilisateur;
+
+
+
 /**
  * Classe dedition du panier
  * @author Cadour ulysse Penkler Alexandre
@@ -54,7 +59,6 @@ public class EditPanier extends HttpServlet {
 			    if(item.representation.toString().equals(date) && item.representation.getNum()==new Integer(num)&&place.getNoPlace()==new Integer(place2)&&place.getNoRang()==new Integer(rang)){
 				out.println("trouve");
 				tj=j; ti=i;
-				//item.lesPlaces.remove(item.lesPlaces.lastIndexOf(item));
 			    }
 			    j++;
 			}
@@ -63,7 +67,11 @@ public class EditPanier extends HttpServlet {
 		    }
 		if(ti!=-1&&tj!=-1)
 		    p.Liste.get(ti).lesPlaces.remove(tj);
-		
+		if(session.getAttribute("session.PanierListe")!=null){
+		    Utilisateur user = Utilitaires.Identification(this);
+		    Utilitaires.retirerPlacePanier(user,(String)session.getAttribute("session.log"),num,date,place2,rang);
+
+		}
 	    }
 		
 	    

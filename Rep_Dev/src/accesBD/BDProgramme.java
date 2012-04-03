@@ -79,7 +79,7 @@ public class BDProgramme {
 	
     }
     
-        public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
+        public static String retirerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
 	    throws CategorieException, ExceptionConnexion {
 	    String res="";
 	    String requete ;
@@ -99,6 +99,27 @@ public class BDProgramme {
 	    BDConnexion.FermerTout(conn, stmt, rs);	
 	    return res;
     }
+            public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
+	    throws CategorieException, ExceptionConnexion {
+	    String res="";
+	    String requete ;
+	    Statement stmt ;
+	    ResultSet rs ;
+	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    requete = "insert into panier values ('"+num+"', TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"'), '"+place+"','"+rang+"' ,'"+login+"')";
+	    try {
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery(requete);
+		res+="la place a bien ete enregistree dans la base <br>";
+	    } catch (SQLException e) {
+	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
+					  + "Code Oracle " + e.getErrorCode()
+					  + "Message " + e.getMessage());
+	    }
+	    BDConnexion.FermerTout(conn, stmt, rs);	
+	    return res;
+    }
+
     public static Vector<Representation>  getRepresentation(Utilisateur user,int numS)throws CategorieException, ExceptionConnexion {
 	Vector<Representation> res= new Vector<Representation>();
 	String requete ;
