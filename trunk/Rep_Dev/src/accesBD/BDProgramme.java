@@ -272,4 +272,35 @@ public class BDProgramme {
 	return res;
     }
 
+        public static String getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
+	String requete ;
+	Statement stmt ;
+	ResultSet rs ;
+	PanierListe p= new PanierListe();
+	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
+	String res="";
+	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	requete = "Select numS ,dateRep , noPlace,noRang,identifian from panier where \'"+login+"\'=identifian";
+	
+	try {
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    res+=requete;
+	    while (rs.next()) {
+		// if(!p.In(rs.getInt(1),rs.getString(2)))
+		//    p.Liste.add(new Item(new Spectacle (" ",rs.getInt(1)), new Representation(rs.getInt(1),s.parse(rs.getString(2)))));
+		// p.addPlace(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+		res+="<br> AAAAAAAAH "+rs.getInt(1);   
+		
+	    }
+	    BDConnexion.FermerTout(conn, stmt, rs);	
+	}
+	catch (Exception e) {
+	    res+=e.getMessage();
+	}
+
+	return res;
+    }
+
+
 }
