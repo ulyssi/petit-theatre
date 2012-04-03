@@ -1,11 +1,18 @@
 package modele;
+/**
+ * Classe permettant de representer le modele des categories 
+ * @author Cadour ulysse Penkler Alexandre
+ * @version 1.0
+ */
 
 public class Categorie {
 
 	private String categorie;
 	private float prix;
-	
-	public Categorie (String c, float p) {
+    /**
+     * Permet de creer une categorie
+     */
+    public Categorie (String c, float p) {
 		this.categorie = c;
 		this.prix = p;
 	}

@@ -1,7 +1,11 @@
 package modele;
 
-public class Place {
 
+ /*
+  * Cette classe permet de virtualiser un place elle contient un numero de rang et un numero de place 
+ */
+public class Place {
+    
 	private int noRang;
 	private int noPlace;
 	

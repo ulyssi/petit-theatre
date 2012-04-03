@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 /**
- *  Cette classe Permet de contenir un item du panier  *
+ *  Cette classe Permet de representer un Item du panier
  * @author Penkler Cadour
  * @version 1.0
  */
@@ -15,12 +15,11 @@ public class Item{
     public Representation representation;
     public ArrayList<Place> lesPlaces;
     
-    /** Constructeur d'item un item est composé d'un ensemble de place d'un spectacle et une 
+    /** Constructeur d'item un item est compose d'un ensemble de place d'un spectacle et une 
      * representation il permet de creer une reservation dans le panier pour une ou plusieur places
      * @param Spectacle s  le spectacle
      * @param Representation  la representation
      */
-    
     
     public Item(Spectacle s , Representation r ){
 	spectacle=s; 

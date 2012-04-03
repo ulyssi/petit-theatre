@@ -1,5 +1,10 @@
 package modele; 
 import java.util.ArrayList;
+/*
+ *Cette classe permet de lister tout les representations disponible pour un spectacle donne
+ */
+
+
 
 public class ProgrammeListe{
     public Spectacle spectacle;
