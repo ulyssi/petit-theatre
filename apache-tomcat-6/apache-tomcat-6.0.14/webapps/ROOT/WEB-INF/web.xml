@@ -89,8 +89,8 @@
 </servlet>
 
 - <servlet> 
-<servlet-name>EffectuerReservationServlet</servlet-name> 
-<servlet-class>EffectuerReservationServlet</servlet-class> 
+<servlet-name>ReserverPlaceServlet</servlet-name> 
+<servlet-class>ReserverPlaceServlet</servlet-class> 
 </servlet>
 
 
@@ -129,8 +129,8 @@
 </servlet-mapping>
 
 - <servlet-mapping> 
-<servlet-name>EffectuerReservationServlet</servlet-name> 
-<url-pattern>/servlet/EffectuerReservationServlet</url-pattern> 
+<servlet-name>ReserverPlaceServlet</servlet-name> 
+<url-pattern>/servlet/ReserverPlaceServlet</url-pattern> 
 </servlet-mapping>
 
 - <servlet-mapping> 
@@ -138,6 +138,8 @@
 <url-pattern>/servlet/Validate</url-pattern> 
 </servlet-mapping>
 
+
+ 
 
  <security-constraint>
     <web-resource-collection>
