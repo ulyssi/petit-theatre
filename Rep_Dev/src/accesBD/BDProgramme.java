@@ -51,13 +51,14 @@ public class BDProgramme {
 	return res;
     }
  
-    public static void addRepresentation(Utilisateur user,int numS,String dateS)throws CategorieException, ExceptionConnexion {
+
+ public static void addRepresentation(Utilisateur user,Representation R)throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;
 	ResultSet rs ;
 	Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	//	insert into LESREPRESENTATIONS values ('101', TO_DATE('06/11/2009 20h','DD/MM/YYYY HH24"h"'));	
-	requete = "insert into LESREPRESENTATIONS values ('"+numS+"', TO_DATE('"+dateS+"','DD/MM/YYYY HH24\"h\"'))";
+	requete = "insert into LESREPRESENTATIONS values ('"+R.getNum()+"', TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"'))";
 	try {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);

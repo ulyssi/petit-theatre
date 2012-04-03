@@ -86,20 +86,24 @@ public class Utilitaires {
 	return res;
     }
 
-    public static String AjouterRepresentation(Utilisateur user,int numS, String dateS){
-	String resultat ="Ajout des valeurs "+numS+"dateS <br>";
+    
+    public static String AjouterRepresentation(Utilisateur user,Representation R){
+	String resultat ="Ajout des valeurs "+R.getNum()+"dateS <br>";
 	try {
-	    BDProgramme.addRepresentation(user,numS,dateS);
+	    BDProgramme.addRepresentation(user,R);
 	    resultat=resultat+"Valeurs ins&eacute;r&eacute; avec succ&egrave<br>";
 	}
 	
 	catch (CategorieException e) {
+	    resultat=resultat+" Erreur dans l'insertion: le numero."+R.getNum()+"ne correspond pas &agrave; un spectacle valide<br>";
+	}
+	catch (ExceptionConnexion e) {
 	    resultat= resultat+" Erreur dans l'insertion: "+ e.getMessage()+"<br>";
-	} catch (ExceptionConnexion e) {
-	    resultat=resultat+" Erreur dans l'insertion: "+ e.getMessage()+"<br>";}
+	}
 	return resultat;
     }
     
+
 
     public static String listerRepresentations(Utilisateur user,int numS){
 	Vector<Representation> res = new Vector<Representation>();
