@@ -52,7 +52,7 @@ public class Utilitaires {
 			  resultat+="method=POST>\n";
 	      		  resultat+="<input type=\"hidden\" name=\"num\" value=\""+rp.getNum()+"\" />\n";
 	      		  resultat+="<input type=\"hidden\" name=\"nom\" value=\""+res.elementAt(i).spectacle.getNom()+"\" />\n";
-	      		  resultat+="<button name=\"date\" value =\""+rp+"\" type=\"submit\">"+"Date de la repr&eacutesentation :"+rp+"</button>\n";		
+	      		  resultat+="<button name=\"date\" value =\""+rp+"\" type=\"submit\">"+"Date de la repr&eacute;sentation :"+rp+"</button>\n";		
 	      		  resultat+="</form>\n";
 	      	      }	
 			      
@@ -200,7 +200,7 @@ public class Utilitaires {
 
     public static String ReserverRepresentation(Representation R,int numZ){
 	String rslt="";
-	//rslt+=BDProgramme.ReserverRepresentation(user,R,numZ);
+	//	rslt+=BDProgramme.ReserverRepresentation(user,R,numZ);
 	return rslt;
     }
 
