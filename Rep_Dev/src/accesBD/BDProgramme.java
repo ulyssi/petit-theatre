@@ -268,7 +268,6 @@ public class BDProgramme {
 
 
     public static Place  getPlaceZone(Utilisateur user,Representation R,int zone){
-	
 	String requete ;
 	Statement stmt=null ;
 	ResultSet rs=null ;
@@ -280,7 +279,7 @@ public class BDProgramme {
 	
 	requete = "Select P.noPlace, P.noRang from LESPLACES P, LESREPRESENTATIONS R where ";
 	requete=requete+"R.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"') and ";
-	requete=requete+"P.numZ="+zone +"not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"')";
+	requete=requete+"P.numZ='"+zone +"'and not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"')";
 	requete=requete+ " and T.noPlace = P.noPlace and T.noRang=P.noRang)";
 	try{
 	    conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
@@ -293,7 +292,8 @@ public class BDProgramme {
 	    rslt= null;
 	}
 	BDConnexion.FermerTout(conn, stmt, rs);
-	return rslt;
+	return rslt;	
+
     }
     
     
