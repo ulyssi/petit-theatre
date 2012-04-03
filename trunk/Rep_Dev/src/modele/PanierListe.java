@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+ /*
+ * Cette servlet permet de virtualiser un panier 
+ */
 public class PanierListe {
     public ArrayList<Item> Liste;
     

@@ -26,11 +26,15 @@ import java.util.ArrayList;
  */
 
 public class RepresentationServlet extends HttpServlet {
-    /* SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
-     * THIS SOFTWARE OR ITS DERIVATIVES.
-     *
-     * CopyrightVersion 1.0
+    /**
+     * Permet de répondre à une requête web En affichant la liste des Spectacles et representations : 
+     * Utiliste JQuery javascript pour la mise en forme
+     * @param HttpServletRequest request requete 
+     * @param HttpServletResponse response réponse
+     * @throw IOException, ServletException
+     * @return void 
      */
+
     public void doGet (HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException {
 	//Get the session object
@@ -83,7 +87,7 @@ public class RepresentationServlet extends HttpServlet {
         return "Reservation servlet";
     }
     /**
-     * HTTP POST request entry point.
+     * HTTP POST request entry point. Renvoie sur la méthode do get de cette meme classe 
      *
      * @param req	an HttpServletRequest object that contains the request 
      *			the client has made of the servlet

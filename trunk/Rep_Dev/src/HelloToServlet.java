@@ -2,13 +2,20 @@ import java.io.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-
 /**
- **/
-
+ * Classe d'exemple de servlet 
+ * @author Cadour ulysse Penkler Alexandre
+ * @version 2.6
+ */
 
 public class HelloToServlet extends HttpServlet {
-
+    /**
+     * Permet de répondre à une requête web
+     * @param HttpServletRequest request requete 
+     * @param HttpServletResponse response réponse
+     * @throw IOException, ServletException
+     * @return void 
+     */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException
     {

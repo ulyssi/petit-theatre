@@ -16,6 +16,17 @@ import java.util.Vector;
 
 
 public class Panier extends HttpServlet {
+        /**
+     * Permet de répondre à une requête web affiche le contenu du panier ansi que les différentes
+     * Places disponible pour la Representation passée via la methode POST HTML
+     * Creation du panier , des différent Item mis dedans et le rajoute dans les cookie
+     * Du client si nécessaire.
+     * @param HttpServletRequest request requete 
+     * @param HttpServletResponse response réponse
+     * @throw IOException, ServletException
+     * @return void 
+     */
+
     public void doGet (HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException {
 	HttpSession session = req.getSession(true);
@@ -79,6 +90,14 @@ public class Panier extends HttpServlet {
     public String getServletInfo() {
         return "Reservation servlet";
     }
+        /**
+     * Permet de répondre à une reque POST , renvoie vers la requete GET associée a cette meme classe
+     * Elle permet notamment d'ajouter des Item
+     * @param HttpServletRequest request requete 
+     * @param HttpServletResponse response réponse
+     * @throw IOException, ServletException
+     * @return void 
+     */
 
     
     public void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -9,7 +9,17 @@ import modele.Utilisateur;
 
 
 public class Validate extends HttpServlet {
-     public void doGet (HttpServletRequest req, HttpServletResponse res)
+    /**
+     * Permet de répondre à une requête web utilise un acces a la bd pour verifier et 
+     * Ensuite valider le pannier affiche un feedback direct a l'utilisateur poru lui 
+     * assurer la validation de la reservation des places 
+     * @param HttpServletRequest request requete 
+     * @param HttpServletResponse response réponse
+     * @throw IOException, ServletException
+     * @return void 
+     */
+
+    public void doGet (HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException {
 
 	HttpSession session = req.getSession(true);
