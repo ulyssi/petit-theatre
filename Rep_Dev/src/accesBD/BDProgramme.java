@@ -90,7 +90,7 @@ public class BDProgramme {
 	    try {
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery(requete);
-		res+="la place a bien ete enregistree dans la base <br>";
+		res+="";
 	    } catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des spectacles.."
 					  + "Code Oracle " + e.getErrorCode()
@@ -98,7 +98,7 @@ public class BDProgramme {
 	    }
 	    BDConnexion.FermerTout(conn, stmt, rs);	
 	    return res;
-    }
+	}
             public static String enregistrerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
 	    throws CategorieException, ExceptionConnexion {
 	    String res="";
