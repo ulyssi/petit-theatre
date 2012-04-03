@@ -643,3 +643,5 @@ insert into LESTICKETS values ('282', '104', TO_DATE('22/04/2010 20h','DD/MM/YYY
 insert into LESTICKETS values ('283', '104', TO_DATE('22/04/2010 20h','DD/MM/YYYY HH24"h"'), '20', '2', '08-FEB-10', '104');
 insert into LESTICKETS values ('284', '104', TO_DATE('22/04/2010 20h','DD/MM/YYYY HH24"h"'), '1', '5', TO_DATE('21/04/2010 10h','DD/MM/YYYY HH24"h"'), '104');
 insert into LESTICKETS values ('285', '104', TO_DATE('22/04/2010 20h','DD/MM/YYYY HH24"h"'), '13', '9', '09-FEB-10', '104');
+
+insert into Panier values ('104',TO_DATE('22/04/2010 20h','DD/MM/YYYY HH24"h"'),'2','2','Alexandre');
