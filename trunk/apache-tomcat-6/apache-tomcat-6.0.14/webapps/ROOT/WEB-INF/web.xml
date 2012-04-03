@@ -121,6 +121,11 @@
 <url-pattern>/servlet/EffectuerReservationServlet</url-pattern> 
 </servlet-mapping>
 
+- <servlet-mapping> 
+<servlet-name>Validate</servlet-name> 
+<url-pattern>/servlet/Validate</url-pattern> 
+</servlet-mapping>
+
 
  <security-constraint>
     <web-resource-collection>
