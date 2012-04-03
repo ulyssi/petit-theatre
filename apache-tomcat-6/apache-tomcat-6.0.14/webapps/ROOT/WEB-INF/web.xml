@@ -161,7 +161,7 @@
 
   <login-config>
     <auth-method>BASIC</auth-method>
-    <realm-name>identifier vous</realm-name>
+    <realm-name>identifiez vous</realm-name>
   </login-config>
 
   <security-role>

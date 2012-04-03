@@ -134,6 +134,7 @@ public class Utilitaires {
 		for (int i = 0; i < res.size(); i++) {
 		    Representation rep=res.elementAt(i);
 		    resultat+="<a href=\"NoPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\">"+rep+"</a><br>";
+		    resultat+="<a href=\"ReserverPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\"> acheter dans une zone </a><br>";
 		}
 	    }
 	    
