@@ -49,13 +49,13 @@ public class Panier extends HttpServlet {
 	    	    
 	    if (place!=null && rang != null && num!=null&&date!=null) {
 		if (session.getAttribute("session.PanierListe")!=null){ 
-		    out.println( "PLAAAAAAACEEEEEEEEEEEDEEEEEEEERAAAAAAAAAAAANG"+rang+"PLACE"+place);
 		    ((PanierListe)session.getAttribute("session.PanierListe")).addPlace(num,date,place,rang);
 		}
 	    }
 	    if (nom != null&& num!=null&&date!=null) {
 		if (session.getAttribute("session.PanierListe")!=null){ 
-		    ((PanierListe)session.getAttribute("session.PanierListe")).Liste.add(new Item(new Spectacle (nom,new Integer(num)), new Representation(new Integer(num),s.parse(date))));
+		    if(!((PanierListe)session.getAttribute("session.PanierListe")).In(new Integer(num),date))
+			((PanierListe)session.getAttribute("session.PanierListe")).Liste.add(new Item(new Spectacle (nom,new Integer(num)), new Representation(new Integer(num),s.parse(date))));
 		}		
 		else{
 		    //creation d'un nouveau panier 
@@ -68,7 +68,7 @@ public class Panier extends HttpServlet {
 	    if(session.getAttribute("session.PanierListe")!=null&& date!=null && num !=null ){
 		out.println("contenu  actuel du caddie:<br>");
 		out.println(((PanierListe)session.getAttribute("session.PanierListe")).toString());
-		out.println("<h1>Veuillez selectionner une place pour la representation de "+nom  +" numero "+num+ "a la date du : "+date+ ":</h1><br>");
+		out.println("<h1>Veuillez selectionner une place pour la representation numero: "+num+ "a la date du : "+date+ ":</h1><br>");
 		//Affichage des places Dispo pour la representation:
 		Utilisateur user = Utilitaires.Identification(this);
 		out.println(Utilitaires.AffichagePlaceAchat(user,num,date));

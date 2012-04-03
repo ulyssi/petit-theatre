@@ -41,5 +41,16 @@ public class Item{
 	
 	
     }
+    /**
+     * Permet de verifier qu'une place n'est pas deja presente dans le panier 
+     */
+    public boolean In(int numplace, int rang){
+	for (Place place : lesPlaces)
+	    if (place.getNoPlace()==numplace && rang==place.getNoRang())
+		return true;
+	return false;
+		    
+    }
     
+
 }
