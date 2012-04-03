@@ -42,6 +42,19 @@ public class Validate extends HttpServlet {
 			try{
 			    Utilisateur user = Utilitaires.Identification(this);	
 			    out.println(Utilitaires.ValiderPanier(user,(PanierListe)session.getAttribute("session.PanierListe")));
+			    if(session.getAttribute("session.log")!=null){
+				try{  user = Utilitaires.Identification(this);
+				    PanierListe p =(PanierListe)session.getAttribute("session.PanierListe");
+				    for(Item item : p.Liste)
+					{
+					    for(Place place : item.lesPlaces){
+						out.println(Utilitaires.retirerPlacePanier(user,(String)session.getAttribute("session.log"),String.valueOf(item.representation.getNum()),item.representation.toString(),String.valueOf(place.getNoPlace()),String.valueOf(place.getNoRang())));
+					    }
+					}
+				}
+				catch (Exception e){
+				    out.println(e.getMessage());}
+			    }
 			}
 			catch (Exception e ){
 			    out.println("probleme de connexion a la base de donnee");
