@@ -128,24 +128,51 @@ public class BDProgramme {
 
     public static String valide(Utilisateur user,PanierListe  p ){
 	String res = "";
- 	String requete ;
+ 	String requete="" ;
 	Statement stmt ;
 	ResultSet rs ;
 	try{
 	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	    //verification de donnees
-	    res+= "Select T.noPlace, T.noRang,T.numS,T.dateRep from LESTICKETS T where ";
+	    requete+= "Select T.noPlace, T.noRang,T.numS,T.dateRep from LESTICKETS T where ";
 	    boolean first=true;
 	    for(int i= 0; i<p.Liste.size();i++)
 	    	for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
 		    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
-			res+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
+			requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
 		    else
-			res+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
+			requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
 		}
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    boolean err=false; 
+	    while(rs.next()) {
+		res+="la place num "+rs.getInt(1)+" de rang "+rs.getInt(2)+" de spectale "+rs.getInt(3)+" de date "+rs.getDate(1)+" est non disponible";
+		err=true;
+	    }
+	    if (err)
+		return res;
+	    else {
+		
+
+		BDConnexion.FermerTout(conn, stmt, rs);
+		conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	  
+		// on fait la reservation 
+		requete=""; 
+		for(int i= 0; i<p.Liste.size();i++)
+		    for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
+			requete+="insert into LESTICKETS values ('996','"+p.Liste.get(i).representation.getNum()+"', TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"'),"+"'"+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+"','"+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"','09-FEB-10','104')";
+			
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(requete);
+		    }
+		
+	    }
 	}
 	catch(Exception e ){
-	    res = "erreur" ;
+	    res = "erreur"+e.getMessage();
 	}
 	return res;
     }
