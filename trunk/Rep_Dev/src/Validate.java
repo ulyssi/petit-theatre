@@ -10,7 +10,7 @@ import modele.Utilisateur;
 
 public class Validate extends HttpServlet {
     /**
-     * Permet de repondre a  une requete web utilise un acces a la bd pour verifier et 
+     * Permet de repondre a une requete web utilise un acces a la bd pour verifier et 
      * Ensuite valider le pannier affiche un feedback direct a l'utilisateur poru lui 
      * assurer la validation de la reservation des places 
      * @param HttpServletRequest request requete 
