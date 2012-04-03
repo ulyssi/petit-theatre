@@ -28,16 +28,18 @@ public class PanierListe {
 		Calendar calendar;
 	calendar= Calendar.getInstance();
 	calendar.setTime(d);
-	//&& item.representation.calendar.compareto(calendar)) 
 	for(Item item:Liste)
 	    if (item.spectacle.getNum()==new Integer(num))
-		item.lesPlaces.add(new Place(new Integer(rang),new Integer(place)));
-   
+		if (!item.In(new Integer(place),new Integer(rang)))
+		    item.lesPlaces.add(new Place(new Integer(rang),new Integer(place)));
+	
 	}
 	catch (Exception e){}
     }
     
     
+
+
     /** Permet de verifier qu'il y a au moins un place dans le panier 
      * @return true si au moins un place est dans le panier false sinon
      */
@@ -62,9 +64,26 @@ public class PanierListe {
      */
     public String toString(){
 	String res="";
-	for(Item item : Liste)
+	for(Item item : Liste){
 	    res+=item.toString();
+	    res+="<br>";
+	}
 	return res;
     }
+    
+
+    public boolean In(int numRep,String date){
+	try{
+	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
+	Representation n = new Representation(new Integer(numRep),s.parse(date));
+	for (Item item : Liste)
+	    if (item.representation.getNum()==numRep && item.representation.equals(n))
+			return true;
+	}
+	catch(Exception e){}
+	return false;
+		    
+    }
+    
     
 }

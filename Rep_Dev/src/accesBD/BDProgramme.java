@@ -16,6 +16,11 @@ import modele.Spectacle;
 import modele.Utilisateur;
 import modele.Place;
 import modele.*;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+
 
 public class BDProgramme {
     public BDProgramme () {
@@ -52,7 +57,7 @@ public class BDProgramme {
     }
  
 
- public static void addRepresentation(Utilisateur user,Representation R)throws CategorieException, ExceptionConnexion {
+    public static void addRepresentation(Utilisateur user,Representation R)throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;
 	ResultSet rs ;
@@ -119,7 +124,7 @@ public class BDProgramme {
 	    }
 	} catch (SQLException e) {
 	    throw new CategorieException (" Problème dans l'interrogation des Places disponibles..<br>"+requete+
-					   "<br> Code Oracle " + e.getErrorCode()
+					  "<br> Code Oracle " + e.getErrorCode()
 					  + "Message " + e.getMessage());
 	}
 	BDConnexion.FermerTout(conn, stmt, rs);	
@@ -138,42 +143,60 @@ public class BDProgramme {
 	    boolean first=true;
 	    for(int i= 0; i<p.Liste.size();i++)
 	    	for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
-		    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
-			requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
-		    else
-			requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
-		}
+	    	    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
+	    		requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
+	    	    else
+	    		requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
+	    	}
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    boolean err=false; 
 	    while(rs.next()) {
-		res+="la place num "+rs.getInt(1)+" de rang "+rs.getInt(2)+" de spectale "+rs.getInt(3)+" de date "+rs.getDate(1)+" est non disponible";
-		err=true;
+	    	res+="la place num "+rs.getInt(1)+" de rang "+rs.getInt(2)+" de spectale "+rs.getInt(3)+" de date "+rs.getDate(1)+" est non disponible";
+	    	err=true;
 	    }
 	    if (err)
-		return res;
+	    	return res;
 	    else {
 		
 
-		BDConnexion.FermerTout(conn, stmt, rs);
-		conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
-	  
+		
 		// on fait la reservation 
 		requete=""; 
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		//recuperer le dernier numero de serie
+		requete ="Select noserie from LESTICKETS order by noSerie DESC" ;
+		rs = stmt.executeQuery(requete);
+		rs.next();
+		int lastnoSerie=(rs.getInt(1))+1;
+	
 		for(int i= 0; i<p.Liste.size();i++)
 		    for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
-			requete+="insert into LESTICKETS values ('996','"+p.Liste.get(i).representation.getNum()+"', TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"'),"+"'"+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+"','"+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"','09-FEB-10','104')";
-			
-			
-			stmt = conn.createStatement();
+			requete="insert into LESTICKETS values (";
+			requete+="\'"+lastnoSerie+"\',\'"+p.Liste.get(i).representation.getNum()+"\', TO_DATE(\'"+p.Liste.get(i).representation;
+			requete+="\',\'DD/MM/YYYY HH24\"h\"\'),"+"\'"+p.Liste.get(i).lesPlaces.get(j).getNoPlace();
+			requete+="\',\'"+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"\',TO_DATE(\'"+dateFormat.format(date)+ "\',\'DD/MM/YYYY HH24\"h\"\'),\'104\')";
+			lastnoSerie++;
 			rs = stmt.executeQuery(requete);
+			rs.close();
 		    }
 		
 	    }
+	    
+	    BDConnexion.FermerTout(conn, stmt, rs);
+	}
+	
+	catch (SQLException e){
+	    res="<br> Code Oracle " + e.getErrorCode();
+	    res+= "erreur"+e.getMessage();
+	    res+=e.getSQLState();
 	}
 	catch(Exception e ){
-	    res = "erreur"+e.getMessage();
+	    return e.getMessage();
 	}
+
+	
 	return res;
     }
     public static Vector<ProgrammeListe> getProgramListes(Utilisateur user)
