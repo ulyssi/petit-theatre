@@ -40,7 +40,10 @@ import java.io.File;
 public class ProgrammeServlet extends HttpServlet {
 
    /**
-    * HTTP GET request entry point.
+    *	cette methode permet de Recuperation de la liste de tous les spectacles de la saison.
+    * ent construisant une une page web decrivant ces spectacles.
+    *
+    *
     *
     * @param req	an HttpServletRequest object that contains the request 
     *			the client has made of the servlet
@@ -62,13 +65,6 @@ public class ProgrammeServlet extends HttpServlet {
 	out.println("<HEAD><TITLE> Programme de la saison </TITLE></HEAD>");
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	out.println("<font color=\"#FFFFFF\"><h1> Programme de la saison </h1>");
-	
-	// TO DO
-	// Recuperation de la liste de tous les spectacles de la saison.
-	// Puis construction dynamique d'une page web decrivant ces spectacles.
-
-	//	out.println("<p><i><font color=\"#FFFFFF\"> jkazjzajhazj</i></p>");
-
 	out.println("<FORM METHOD=POST>");	
 	if(session.isNew()) {
 	   
@@ -163,83 +159,3 @@ public class ProgrammeServlet extends HttpServlet {
     }
 
 }
-/*
-
-  import java.io.*;
-  import javax.servlet.*;
-  import javax.servlet.http.*;
-
-  public class ProgrammeServlet extends HttpServlet
-  {
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
-              throws ServletException, IOException
-    {
-      res.setContentType("text/html");
-      PrintWriter out = res.getWriter();
-      out.print("<HTML><HEAD><TITLE>Online Shop</TITLE>"+
-                "</HEAD><BODY><FORM METHOD=POST>"+
-                "<INPUT TYPE=SUBMIT NAME=foo VALUE="+
-                "\"Put a FOO into the shopping cart\">"+
-                "<INPUT TYPE=SUBMIT NAME=bar VALUE="+
-                "\"Put a BAR into the shopping cart\">"+
-                "<INPUT TYPE=SUBMIT NAME=see VALUE="+
-               "\"See the shopping cart contents\">"+
-                "<INPUT TYPE=SUBMIT NAME=buy VALUE="+
-                "\"Buy the shopping cart contents\">"+
-               "</FORM></BODY></HTML>");
-      out.close();
-    }
-
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
-              throws ServletException, IOException
-    {
-      String msg;
-
-      HttpSession session = req.getSession(true);
-      if(session.isNew())
-      {
-       session.putValue("foo", new int[] { 0 });
-        session.putValue("bar", new int[] { 0 });
-      }
-
-      int[] foo = (int[])session.getValue("foo");
-      int[] bar = (int[])session.getValue("bar");
-      if(req.getParameter("foo") != null)
-      {
-        foo[0]++;
-        msg = "Bought a FOO. You now have "+foo[0]+".";
-      }
-      else if(req.getParameter("bar") != null)
-      {
-        bar[0]++;
-        msg = "Bought a BAR. You now have "+bar[0]+".";
-      }
-      else if(req.getParameter("buy") != null)
-      {
-        session.invalidate();
-        msg = "Your order for "+foo[0]+" FOOs and "+bar[0]+
-          " BARs has been accepted. Your shopping cart is empty now.";
-      }
-      else
-      {
-        msg = "You have "+foo[0]+" FOOs and "+bar[0]+
-          " BARs in your shopping cart.";
-      }
-
-      res.setContentType("text/html");
-      res.setHeader("pragma", "no-cache");
-      PrintWriter out = res.getWriter();
-      out.print("<HTML><HEAD><TITLE>Shopping Cart</TITLE></HEAD><BODY>");
-      out.print(msg);
-      out.print("<HR><A HREF=\"");
-      out.print(req.getRequestURI());
-      out.print("\">Back to the shop</A></BODY></HTML>");
-      out.close();
-    }
-
-    public String getServletInfo()
-    {
-      return "ShoppingCartServlet 1.0 by Stefan Zeiger";
-    }
-  }
-*/
