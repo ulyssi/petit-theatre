@@ -199,6 +199,38 @@ public class BDProgramme {
 	
 	return res;
     }
+
+
+    public static Place  getPlaceZone(Utilisateur user,Representation R,int zone){
+	
+	String requete ;
+	Statement stmt=null ;
+	ResultSet rs=null ;
+	Connection conn=null;
+	Place rslt=null;
+	
+	
+	
+	
+	requete = "Select P.noPlace, P.noRang from LESPLACES P, LESREPRESENTATIONS R where ";
+	requete=requete+"R.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"') and ";
+	requete=requete+"P.numZ="+zone +"not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+R+"','DD/MM/YYYY HH24\"h\"')";
+	requete=requete+ " and T.noPlace = P.noPlace and T.noRang=P.noRang)";
+	try{
+	    conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    if(rs.next())
+		rslt=new Place(rs.getInt(2),rs.getInt(1));
+	}
+	catch(Exception e){
+	    rslt= null;
+	}
+	BDConnexion.FermerTout(conn, stmt, rs);
+	return rslt;
+    }
+    
+    
     public static Vector<ProgrammeListe> getProgramListes(Utilisateur user)
 	throws CategorieException, ExceptionConnexion {
 	Vector<ProgrammeListe> res = new Vector<ProgrammeListe>();
