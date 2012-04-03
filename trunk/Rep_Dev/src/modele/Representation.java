@@ -2,18 +2,29 @@ package modele;
 import java.util.Calendar;
 import java.util.Date;
 import java.sql.Time;
+/*
+ * Cette classe permet de representer une represenation elle est Composée d'une date d'un numero et un calendrier
+ */
 public class Representation {
 
     private Date date;
     private int num ;
     public Calendar calendar;
+    /*
+     * @param n le numero de la representation 
+     * @param d la date de la representation 
+     */
     public Representation (int n, Date d) {
 		this.date = d;
 		calendar= Calendar.getInstance();
 		calendar.setTime(d);
 		num=n;
     }
-    
+    /*
+     * @param n le numero de la representation 
+     * @param d la date de la representation 
+     * @paral t le format de la date
+     */
     public Representation (int n, Date d,Time t) {
 		this.date = d;
 		calendar= Calendar.getInstance();
