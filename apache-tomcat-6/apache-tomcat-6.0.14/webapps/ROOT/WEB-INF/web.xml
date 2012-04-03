@@ -61,6 +61,12 @@
 </servlet>
 
 - <servlet> 
+<servlet-name>NoPlaceServlet</servlet-name> 
+<servlet-class>NoPlaceServlet</servlet-class> 
+</servlet>
+
+
+- <servlet> 
 <servlet-name>HelloToServlet</servlet-name> 
 <servlet-class>HelloToServlet</servlet-class> 
 </servlet>
@@ -68,6 +74,11 @@
 - <servlet> 
 <servlet-name>Validate</servlet-name> 
 <servlet-class>Validate</servlet-class> 
+</servlet>
+
+- <servlet> 
+<servlet-name>EffectuerReservationServlet</servlet-name> 
+<servlet-class>EffectuerReservationServlet</servlet-class> 
 </servlet>
 
 
@@ -100,11 +111,44 @@
 <url-pattern>/servlet/HelloToServlet</url-pattern> 
 </servlet-mapping>
 
+- <servlet-mapping> 
+<servlet-name>NoPlaceServlet</servlet-name> 
+<url-pattern>/servlet/NoPlaceServlet</url-pattern> 
+</servlet-mapping>
 
 - <servlet-mapping> 
-<servlet-name>Validate</servlet-name> 
-<url-pattern>/servlet/Validate</url-pattern> 
+<servlet-name>EffectuerReservationServlet</servlet-name> 
+<url-pattern>/servlet/EffectuerReservationServlet</url-pattern> 
 </servlet-mapping>
+
+
+ <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>user-resource</web-resource-name>
+      <description>pages which require login</description>
+      <url-pattern>/admin/*</url-pattern>
+      <url-pattern>/servlet/NouvelleRepresentationServlet</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <description>il faut s'authentifier avant d'acceder à cette page</description>
+      <role-name>admin</role-name>
+    </auth-constraint>
+    <user-data-constraint>
+      <transport-guarantee>NONE</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>identifier vous</realm-name>
+  </login-config>
+
+  <security-role>
+    <description>Any user of the system</description>
+    <role-name>admin</role-name>
+  </security-role>
 
 
 
