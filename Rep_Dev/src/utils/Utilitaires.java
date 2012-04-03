@@ -52,14 +52,14 @@ public class Utilitaires {
 			  resultat+="method=POST>\n";
 	      		  resultat+="<input type=\"hidden\" name=\"num\" value=\""+rp.getNum()+"\" />\n";
 	      		  resultat+="<input type=\"hidden\" name=\"nom\" value=\""+res.elementAt(i).spectacle.getNom()+"\" />\n";
-	      		  resultat+="<button name=\"date\" value =\""+rp.getDate().toString()+"\" type=\"submit\">"+"Date de la repr&eacutesentation :"+rp.getDate().toString()+"</button>\n";		
+	      		  resultat+="<button name=\"date\" value =\""+rp+"\" type=\"submit\">"+"Date de la repr&eacutesentation :"+rp+"</button>\n";		
 	      		  resultat+="</form>\n";
 	      	      }	
 			      
 	      	      resultat+= "</div>\n";
 	      	  }
 	      }
-	
+
 	    } catch (CategorieException e) {
 		  
 		  resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
@@ -151,7 +151,57 @@ public class Utilitaires {
     }
 
 
+    public static String AffichagePlaceAchat(Utilisateur user,String numS,String date){
+	Vector<Place> res = new Vector<Place>();
+	String resultat ="";
+	try{
+	    resultat=resultat+"Liste des places disponible pour la représentation du "+date+" du spectacle "+numS+"<br>";
+	    res=BDProgramme.getPlacesDispo(user,new Integer(numS),date);
+	    if(res.isEmpty()){
+		resultat=resultat+" Aucune places disponibles pour votre requete <br>";
+	    }
+	    else{
+		int noRang=-1;
+		
+		    
+		for (Place place : res) {
+		    if (noRang!=place.getNoRang()){
+			if(noRang!=-1){
+			     resultat+="</form>";
+			}
 
+			resultat+="<br>";
+			noRang=place.getNoRang();
+			resultat+="Places au rang"+noRang+":<br>";
+			resultat+="<form class=\"link\" action=Panier\n";
+			resultat+="method=POST>\n";
+		    }
+		    //insert button with good parameters
+		    resultat+="<input type=\"hidden\" name=\"num\" value=\""+numS+"\" />\n";
+		    resultat+="<input type=\"hidden\" name=\"rang\" value=\""+noRang+"\" />\n";
+		    resultat+="<input type=\"hidden\" name=\"date\" value=\""+date+"\" />\n";
+		    resultat+="<button  name=\"place\" value =\""+place.getNoPlace()+"\" type=\"submit\">"+place.getNoPlace()+"</button>\n";
+			   
+		}
+		resultat+="</form>";
+	    }
+	}
+	catch (CategorieException e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 1: "+ e.getMessage()+"<br>";
+	}
+	catch (ExceptionConnexion e) {
+	    resultat=resultat+" Erreur dans l'affichage du programme 2: "+ e.getMessage()+"<br>";}
+	return resultat;
+    }
+
+
+
+    public static String ValiderPanier(Utilisateur user,PanierListe p){
+	String res= ""; 
+	res=BDProgramme.valide(user,p);
+	return res;
+	
+    }
 
 
     public static Utilisateur Identification(HttpServlet servletParent) throws ExceptionConnexion,

@@ -14,9 +14,12 @@ public class Item{
 	lesPlaces= new  ArrayList<Place>();
     }
     public String toString(){
-	String res=""+spectacle.getNom()+" "+ spectacle.getNum()+"\n";
-	for (Place place : lesPlaces)
-	    res+=" Rang :"+place.getNoRang()+"Place :"+place.getNoPlace();
+	String res=""+spectacle.getNom()+" "+ spectacle.getNum()+"   "+reprensentation+"<br>";
+	if (lesPlaces.size()<=0)
+	    res+="Pas de places selectionnees";
+	else
+	    for (Place place : lesPlaces)
+		res+=" Rang :"+place.getNoRang()+"Place :"+place.getNoPlace();
 	return res;
 	
 	
