@@ -16,11 +16,11 @@ import java.util.Vector;
 
 
 public class Panier extends HttpServlet {
-        /**
-     * Permet de répondre à une requête web affiche le contenu du panier ansi que les différentes
-     * Places disponible pour la Representation passée via la methode POST HTML
+    /**
+     * Permet de repondre a� une requete web affiche le contenu du panier ansi que les differentes
+     * Places disponible pour la Representation passee via la methode POST HTML
      * Creation du panier , des différent Item mis dedans et le rajoute dans les cookie
-     * Du client si nécessaire.
+     * Du client si necessaire.
      * @param HttpServletRequest request requete 
      * @param HttpServletResponse response réponse
      * @throw IOException, ServletException

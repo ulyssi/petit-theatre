@@ -1,8 +1,3 @@
-/*
- * @(#)NouvelleRepresentationServlet.java	1.0 2007/10/31
- * 
- * Copyright (c) 2007 Sara Bouchenak.
- */
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -28,6 +23,8 @@ import java.lang.NumberFormatException;
 public class NouvelleRepresentationServlet extends HttpServlet {
 
     /**
+     * Cette methode permet d'ajouter une nouvelle representation dans la base a l'aide d'une page HTML.
+     * Utilise un Utilisateur et realise des operations sur la base a l'aide des classes d'acces a la bd dependance implicite.
      * HTTP GET request entry point.
      *
      * @param req	an HttpServletRequest object that contains the request 
@@ -167,17 +164,5 @@ public class NouvelleRepresentationServlet extends HttpServlet {
         return "Ajoute une representation a une date donnee pour un spectacle existant";
     }
 
-    private void addRep(int date){
-	/*	try {
-	    //    BDRepresentation.addRepresentation(,nom,prix);
-	}
-	catch (CategorieException e) {
-	    IO.afficherln("Erreur dans l'ajout de la categorie" + e.getMessage());
-	}
-	catch (ExceptionConnexion e) {
-	    IO.afficherln(" Erreur dans l'ajout de la categorie: " + e.getMessage());
-	}
-	*/
-    }
 
 }

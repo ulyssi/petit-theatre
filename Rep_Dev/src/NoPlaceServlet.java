@@ -22,7 +22,8 @@ import modele.Utilisateur;
 public class NoPlaceServlet extends HttpServlet {
 
     /**
-     * HTTP GET request entry point.
+     *Cette methode  permet de consulter l'ensemble des places disponibles pour une representation donnée, chaque place etant decrite par le
+     *numero du rang et le numero de place dans le rang. 
      *
      * @param req	an HttpServletRequest object that contains the request 
      *			the client has made of the servlet
@@ -39,11 +40,6 @@ public class NoPlaceServlet extends HttpServlet {
 
 	String numS;
 	String  jourS,moisS,anneeS, heureS;
-
-// Ecrire une nouvelle servlet qui permet de consulter l'ensemble des places 
-// disponibles pour une représentation donnée, chaque place étant décrite par le
-// numéro du rang et le numéro de place dans le rang. Intégrer cette servlet à 
-// l'application et la tester.
 	ServletOutputStream out = res.getOutputStream();   
 	
 	res.setContentType("text/html");
