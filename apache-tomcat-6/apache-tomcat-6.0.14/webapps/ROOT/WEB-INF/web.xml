@@ -65,6 +65,11 @@
 <servlet-class>HelloToServlet</servlet-class> 
 </servlet>
 
+- <servlet> 
+<servlet-name>Validate</servlet-name> 
+<servlet-class>Validate</servlet-class> 
+</servlet>
+
 
 - <servlet-mapping> 
 <servlet-name>ProgrammeServlet</servlet-name> 
@@ -96,6 +101,10 @@
 </servlet-mapping>
 
 
+- <servlet-mapping> 
+<servlet-name>Validate</servlet-name> 
+<url-pattern>/servlet/Validate</url-pattern> 
+</servlet-mapping>
 
 
 
