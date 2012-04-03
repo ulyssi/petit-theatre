@@ -16,6 +16,8 @@ import modele.Spectacle;
 import modele.Utilisateur;
 import modele.Place;
 import modele.*;
+import accesBD.BDProgramme;
+
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -198,6 +200,29 @@ public class BDProgramme {
 
 	
 	return res;
+    }
+
+    public static String getName(Utilisateur user,int numS){
+	String rslt="";
+	Statement stmt=null ;
+	ResultSet rs=null ;
+	Connection conn=null;
+	String requete="Select S.nomS from LESSPECTACLES S where S.numS='"+numS+"'";
+	try{
+	    conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
+	    stmt = conn.createStatement();
+	    rs = stmt.executeQuery(requete);
+	    if(rs.next())
+		rslt=rs.getString(1);
+	}
+	catch(Exception e){
+	    rslt= null;
+	    
+	}
+	BDConnexion.FermerTout(conn, stmt, rs);
+
+
+	return rslt;
     }
 
 

@@ -41,10 +41,11 @@ public class ReserverPlaceServlet extends HttpServlet {
     {
 
 	HttpSession session = req.getSession(true);
-	String numS, jourS,moisS,anneeS, heureS;
+	String daterep;
+	String numS;
 	String numZ;
 	ServletOutputStream out = res.getOutputStream();   
-	SimpleDateFormat sdf=new SimpleDateFormat("ddMMyyyyHH");
+	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH");
 	res.setContentType("text/html");
 
 	out.println("<HEAD><TITLE> Ajouter une nouvelle representation </TITLE></HEAD>");
@@ -52,31 +53,30 @@ public class ReserverPlaceServlet extends HttpServlet {
 	out.println("<font color=\"#FFFFFF\"><h1> Ajouter une nouvelle repr&eacute;sentation </h1>");
 
 	numZ=(String)session.getValue("numZ");
-	numZ            =req.getParameter("numZ");
-	numS		= req.getParameter("numS");
-	jourS		= req.getParameter("jour");
-	moisS           = req.getParameter("mois");
-	anneeS		= req.getParameter("annee");
-
+	if(numZ==null)
+	    numZ            =req.getParameter("numZ");
+	daterep=req.getParameter("daterep");
+	numS=req.getParameter("numS");
+	
 	Date date=null;
 	Representation rep=null;
 	int noSpec=0;
 	int noZone=0;
-	heureS	= req.getParameter("heure");
+
 
 	rep=(Representation)session.getValue("rep");
 
-	if (numS != null && jourS != null && moisS!=null && anneeS!=null && heureS != null) {
+	if (daterep!=null&&numS!=null) {
 	    try{
 	
 		noSpec=Integer.parseInt(numS);
-		date=sdf.parse(jourS+moisS+anneeS+anneeS);
+		date=sdf.parse(daterep);
 		Calendar now=Calendar.getInstance();
 		Calendar tmp=Calendar.getInstance();
 		tmp.setTime(date);
 		if(now.after(tmp)){
 		    out.println("Erreur:la date est passée<br> ");
-		    out.println("Erreur: le num&eacute;ro de spectacle doit etre donne par un entier<br> ");
+		    
 		    date=null;
 		}
 		else{
@@ -110,37 +110,32 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    out.print("ReserverPlaceServlet\" ");
 	    out.println("method=POST>");
 	    out.println("Num&eacute;ro de spectacle :");
-	    out.println("<input type=text size=20 name=numS>");
+	    out.println("<input type=text size=4 name=numS>");
 	    out.println("<br>");
-	    out.println("                                  jj/mm/aaaa");
+	    out.println("                                  jj/mm/aaaa HH");
 	    out.println("<br>");
 	    out.println("Date de la repr&eacute;sentation :");
-	    out.println("<input type=text size=1 name=jour>");
-	    out.println("<input type=text size=1 name=mois>");
-	    out.println("<input type=text size=2 name=annee>");
+	    out.println("<input type=text size=13 name=daterep>");
 	   
-	    out.println("Heure de d&eacute;but de la repr&eacute;sentation :");
-	    out.println("<input type=text size=20 name=heure>");
 	    out.println("<br>");
-	    out.println("<input type=submit>");
-	    out.println("</form>");
+	   
 	} 
 	if(numZ==null){
-	    out.println("<form action=\"");
-	    out.println("ReserverPlaceServlet\" ");
-	    out.println("num&eacute;ro de zone");
-	    out.println("method=POST>");
+	    out.println("num&eacute;ro de zone <br>");
+	
 	    out.println("<input type=text size=1 name=numZ>");
-	    
 	}
 	else{
+	    
 	    session.putValue("numZ",numZ);
 	}
-	if(numZ!=null&&date!=null) {
+	
+	
+	if(numZ!=null&&rep!=null) {
 	  
 	    out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
 	    session.putValue("numZ",null);
-	    session.putValue("",null);
+	    session.putValue("rep",null);
 	    try{
 		Calendar now=Calendar.getInstance();
 		 rep=new Representation(Integer.parseInt(numS),date);
@@ -152,8 +147,12 @@ public class ReserverPlaceServlet extends HttpServlet {
 		out.println(e.getMessage());
 	    }
 	  
-	    //out.println("<p><i><font color=\"#FFFFFF\"> you entered n:"+numS+"  d: "+jourS+"/etc.."+" h: "+heureS+"</i></p>");
+	    out.println("<p><i><font color=\"#FFFFFF\"> you entered n:"+rep+"</i></p>");
 	 
+	}
+	else{
+	    out.println("<input type=submit>");
+	    out.println("</form>");
 	}
 
 	out.println("<hr><p><font color=\"#FFFFFF\"><a href=\"/admin/admin.html\">Page d'administration</a></p>");

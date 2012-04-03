@@ -39,10 +39,10 @@ public class NouvelleRepresentationServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res)
 	throws ServletException, IOException
     {
-	String numS, jourS,moisS,anneeS, heureS;
+	String numS, daterep;
 
 	ServletOutputStream out = res.getOutputStream();   
-	SimpleDateFormat sdf=new SimpleDateFormat("ddMMyyyyHH");
+	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH'h'");
 	res.setContentType("text/html");
 
 	out.println("<HEAD><TITLE> Ajouter une nouvelle representation </TITLE></HEAD>");
@@ -50,18 +50,20 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	out.println("<font color=\"#FFFFFF\"><h1> Ajouter une nouvelle repr&eacute;sentation </h1>");
 	
 	numS		= req.getParameter("numS");
-	jourS		= req.getParameter("jour");
-	moisS           = req.getParameter("mois");
-	anneeS		= req.getParameter("annee");
+	daterep		= req.getParameter("daterep");
+	
+
+	
+	
 	Date date=null;
-	Representation rep=null;
-	int noSpec;
-	heureS	= req.getParameter("heure");
-	if (numS != null && jourS != null && moisS!=null && anneeS!=null && heureS != null) {
+	Representation R=null;
+       	int noSpec;
+
+	if (numS != null && daterep!=null) {
 	    try{
 		
 		noSpec=Integer.parseInt(numS);
-		date=sdf.parse(jourS+moisS+anneeS+anneeS);
+		date=sdf.parse(daterep);
 		Calendar now=Calendar.getInstance();
 		Calendar tmp=Calendar.getInstance();
 		tmp.setTime(date);
@@ -94,12 +96,8 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	    out.println("                                  jj/mm/aaaa");
 	    out.println("<br>");
 	    out.println("Date de la repr&eacute;sentation :");
-	    out.println("<input type=text size=1 name=jour>");
-	    out.println("<input type=text size=1 name=mois>");
-	    out.println("<input type=text size=2 name=annee>");
-	    // out.println("<br>");
-	    out.println("Heure de d&eacute;but de la repr&eacute;sentation :");
-	    out.println("<input type=text size=20 name=heure>");
+	    out.println("<input type=text size=13 name=daterep>");
+	   
 	    out.println("<br>");
 	    out.println("<input type=submit>");
 	    out.println("</form>");
@@ -116,9 +114,9 @@ public class NouvelleRepresentationServlet extends HttpServlet {
 	    
 	    try{
 		Calendar now=Calendar.getInstance();
-		 rep=new Representation(Integer.parseInt(numS),date);
+		 R=new Representation(Integer.parseInt(numS),date);
 		Utilisateur user = Utilitaires.Identification(this);
-		out.println(Utilitaires.AjouterRepresentation(user,rep));
+		out.println(Utilitaires.AjouterRepresentation(user,R));
 	    }
 	    catch(Exception e){
 		out.println(e.getMessage());
