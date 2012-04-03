@@ -134,13 +134,16 @@ public class BDProgramme {
 	try{
 	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	    //verification de donnees
-	    requete = "Select P.noPlace, P.noRang from LESTICKETS where ";
-	    // for(Item item : p.Liste)
-	    // 	for(Place p : item.lesPlaces){
-	    // 	    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang not exists(Select * from LESTICKETS T where T.DateRep=TO_DATE('"+date+"','DD/MM/YYYY HH24\"h\"')";
-	    // 	    requete+="p.noPlace="+p.getNoPlace()"and"+p.getNoRang"=p.noRang";
-	    // }
+	    res+= "Select T.noPlace, T.noRang,T.numS,T.date from LESTICKETS T where ";
+	    boolean first=true;
+	    for(int i= 0; i<p.Liste.size();i++)
+	    	for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
+		    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
+			res+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation.getDate()+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
+		    else
+			res+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation.getDate()+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
 		}
+	}
 	catch(Exception e ){
 	    res = "erreur" ;
 	}
