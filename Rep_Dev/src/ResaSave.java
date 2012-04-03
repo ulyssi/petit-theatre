@@ -31,8 +31,9 @@ public class ResaSave extends HttpServlet {
         out.println("<title>Log</title>");
         out.println("</head>");
         out.println("<body>");
-	String valid = req.getParameter("valide");
 	String nom = req.getParameter("nom");
+	String delog = req.getParameter("delog");
+	
 	PanierListe p;
 	if(session.getAttribute("session.log")==null){
 	    String name = "";
@@ -43,16 +44,20 @@ public class ResaSave extends HttpServlet {
 		session.setAttribute("session.log",nom);
 		try{
 		    Utilisateur user = Utilitaires.Identification(this);
-		    //p=Utilitaires.getPanier(user,nom);
-		    out.println("AAAAAAAAAA");
-		    out.println(Utilitaires.getPanier(user,nom));
-		    // if(p==null){
-		//     out.println("IDENTIFIANT INCONNU");
-		//     return;
-		// }
+		    out.println(" <br>");
+		    
+		    p=Utilitaires.getPanier(user,nom);
+		    if(p==null){
+			out.println("Probleme accès BD");
+			return;
+		    }
 		
-		// if(p.Liste.size()==0)
-		//     out.println("PANIER VIDE");
+		    if(p.Liste.size()==0)
+			out.println("PANIER VIDE vous etes desormais loggé");
+		    else {
+			session.setAttribute("session.PanierListe",p); 
+			out.println("OK! panier charge");
+		    }  
 	        }
 		
 		catch (Exception e){}
@@ -65,7 +70,7 @@ public class ResaSave extends HttpServlet {
 		    out.print("<form action=\"");
 		    out.print("ResaSave\" ");
 		    out.println("method=POST>");
-		    out.println("login:");
+		    out.println("login");
 		    out.println("<input type=text size=20 name=nom>");
 		    out.println("<br>");
 		    
@@ -74,7 +79,19 @@ public class ResaSave extends HttpServlet {
 	    
 	}
 	else {// deja loggue
-	    out.println("vous etes deja logge sous le nom "+(String)session.getAttribute("session.log"));
+	    if (delog==null){
+		out.println("vous etes deja logge sous le nom "+(String)session.getAttribute("session.log"));
+		out.println("<P>");
+		out.println("<form class=\"link\" action=ResaSave \"method=POST>\n");
+		out.println("<button type=\"submit\"name = \"delog\" value=\"delog\">Se delogger</button>\n");
+		out.println("</form>");
+		out.println("<br>");}
+	    else{ 
+		session.setAttribute("session.PanierListe",null);
+		session.setAttribute("session.log",null);
+		out.println("session terminee");
+	    }
+	    
 	}
 	
 	

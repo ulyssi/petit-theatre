@@ -2,7 +2,7 @@ package modele;
 import java.util.ArrayList;
 import modele.*;
 import java.text.SimpleDateFormat;
-
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,7 +37,21 @@ public class PanierListe {
 	catch (Exception e){}
     }
     
+     public void addPlace(int num,Date date, int place , int rang){
+	try {
+	    Calendar calendar;
+	    calendar= Calendar.getInstance();
+	    calendar.setTime(date);
+	    for(Item item:Liste)
+		if (item.spectacle.getNum()==num)
+		    if (!item.In(place,rang))
+			item.lesPlaces.add(new Place(rang,place));
+	    
+	}
+	catch (Exception e){}
+    }
     
+   
 
 
     /** Permet de verifier qu'il y a au moins un place dans le panier 
