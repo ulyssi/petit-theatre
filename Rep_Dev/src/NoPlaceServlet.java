@@ -13,10 +13,10 @@ import modele.Utilisateur;
 /**
  * NouvelleRepresentation Servlet.
  *
- * Cette servlet donne la liste des .
+ * Cette servlet permet d'afficher les n0 de place d'une representatin 
  *
- * @author <a href="mailto:Sara.Bouchenak@imag.fr">Sara Bouchenak</a>
- * @version 1.0, 31/10/2007
+ * @author Penkler Cadour
+ * @version 1.0
  */
 
 public class NoPlaceServlet extends HttpServlet {
