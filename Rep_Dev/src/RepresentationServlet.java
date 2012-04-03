@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class RepresentationServlet extends HttpServlet {
     /**
-     * Permet de repondre a  une requete web En affichant la liste des Spectacles et representations : 
+     * Permet de repondre a une requete web En affichant la liste des Spectacles et representations : 
      * Utiliste JQuery javascript pour la mise en forme
      * @param HttpServletRequest request requete 
      * @param HttpServletResponse response reponse
