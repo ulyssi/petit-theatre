@@ -34,7 +34,7 @@ public class Validate extends HttpServlet {
 	String valid = req.getParameter("valide");
 
 	if(valid!=null){
-	    out.println("Reservation valide<br>");
+	   
 	    if (valid.equals("valide")){
 		// effectuer la validation sur le caddie 
 		if(session.getAttribute("session.PanierListe")!=null){
@@ -49,8 +49,21 @@ public class Validate extends HttpServlet {
 					{
 					    for(Place place : item.lesPlaces){
 						out.println(Utilitaires.retirerPlacePanier(user,(String)session.getAttribute("session.log"),String.valueOf(item.representation.getNum()),item.representation.toString(),String.valueOf(place.getNoPlace()),String.valueOf(place.getNoRang())));
+						 out.println("Reservation valide<br>");
+					    }
+					    
+					}
+				    
+				    //vidage du panier
+				    for(Item item : p.Liste)
+					{  for(Place place : item.lesPlaces){
+						if(session.getAttribute("session.log")!=null){
+						     Utilisateur user2 = Utilitaires.Identification(this);
+						     out.println(Utilitaires.retirerPlacePanier(user2,(String)session.getAttribute("session.log"),""+item.representation.getNum(),item.representation.toString(),""+place.getNoPlace(),""+place.getNoRang()));
+						}
 					    }
 					}
+				    session.setAttribute("session.PanierListe",null);
 				}
 				catch (Exception e){
 				    out.println(e.getMessage());}
@@ -85,7 +98,7 @@ public class Validate extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws IOException, ServletException
+	throws IOException, ServletException
     {
         doGet(request, response);
     }

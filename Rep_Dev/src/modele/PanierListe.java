@@ -25,11 +25,11 @@ public class PanierListe {
     public void addPlace(String num,String date, String place , String rang){
 	try {SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
 	Date d=s.parse(date);
-		Calendar calendar;
+	Calendar calendar;
 	calendar= Calendar.getInstance();
 	calendar.setTime(d);
 	for(Item item:Liste)
-	    if (item.spectacle.getNum()==new Integer(num))
+	    if (item.spectacle.getNum()==new Integer(num)&&item.representation.calendar.compareTo(calendar)==0)
 		if (!item.In(new Integer(place),new Integer(rang)))
 		    item.lesPlaces.add(new Place(new Integer(rang),new Integer(place)));
 	
@@ -39,13 +39,14 @@ public class PanierListe {
     
      public void addPlace(int num,Date date, int place , int rang){
 	try {
-	    Calendar calendar;
-	    calendar= Calendar.getInstance();
-	    calendar.setTime(date);
-	    for(Item item:Liste)
-		if (item.spectacle.getNum()==num)
-		    if (!item.In(place,rang))
-			item.lesPlaces.add(new Place(rang,place));
+	  Calendar calendar;
+	  calendar= Calendar.getInstance();
+	  calendar.setTime(date);
+	
+	  for(Item item:Liste)
+	      if (item.spectacle.getNum()==num&&item.representation.getDate().compareTo(date)==0)
+		  if (!item.In(place,rang))
+		      item.lesPlaces.add(new Place(rang,place));
 	    
 	}
 	catch (Exception e){}
@@ -88,10 +89,14 @@ public class PanierListe {
 
     public boolean In(int numRep,String date){
 	try{
-	SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
-	Representation n = new Representation(new Integer(numRep),s.parse(date));
+	    SimpleDateFormat s= new SimpleDateFormat("dd/MM/yyyy HH");
+	    Date d=s.parse(date);
+	    Calendar calendar;
+	    calendar= Calendar.getInstance();
+	    calendar.setTime(d);
+	    
 	for (Item item : Liste)
-	    if (item.representation.getNum()==numRep && item.representation.equals(n))
+	    if (item.representation.getNum()==numRep && item.representation.calendar.compareTo(calendar)==0)
 			return true;
 	}
 	catch(Exception e){}

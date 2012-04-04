@@ -1,0 +1,9 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Etape 1 : Compl\IeC {\'e}ter les interactions fournies}{3}
+\contentsline {section}{\numberline {2}Etape 2 : Fournir de nouvelles interactions}{3}
+\contentsline {section}{\numberline {3}Etape 4 : Caddie du client}{3}
+\contentsline {subsection}{\numberline {3.1}Modele de donn\IeC {\'e}es}{3}
+\contentsline {subsection}{\numberline {3.2}Interactions avec la base de donn\IeC {\'e}e}{3}
+\contentsline {subsection}{\numberline {3.3}tests}{3}
+\contentsline {section}{\numberline {4}Etape 6 : S\IeC {\'e}curit\IeC {\'e}}{3}
+\contentsline {section}{\numberline {5}Etape 8 : Pr\IeC {\'e}sentation}{3}
