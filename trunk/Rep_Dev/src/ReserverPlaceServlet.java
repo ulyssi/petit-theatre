@@ -6,6 +6,8 @@ import modele.Utilisateur;
 import modele.Representation;
 import modele.Spectacle;
 import modele.Place;
+import modele.Item;
+import modele.PanierListe;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,9 +53,9 @@ public class ReserverPlaceServlet extends HttpServlet {
 	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH'h'");
 	res.setContentType("text/html");
 
-	out.println("<HEAD><TITLE> Ajouter une nouvelle representation </TITLE></HEAD>");
+	out.println("<HEAD><TITLE> reserver une place dans une zone </TITLE></HEAD>");
 	out.println("<BODY bgproperties=\"fixed\" background=\"/images/rideau.JPG\">");
-	out.println("<font color=\"#FFFFFF\"><h1> Ajouter une nouvelle repr&eacute;sentation </h1>");
+	out.println("<font color=\"#FFFFFF\"><h1> reserver un place dans une zone </h1>");
 
 	numZ=(String)session.getValue("numZ");
 		
@@ -149,7 +151,8 @@ public class ReserverPlaceServlet extends HttpServlet {
 	    session.putValue("rep",null);
 	    try{
 	
-		
+		if(noSpec==0)
+		    noSpec=rep.getNum();
 		Utilisateur user = Utilitaires.Identification(this);
 		Place P=BDProgramme.getPlaceZone(user,rep,noZone);
 		String nom= BDProgramme.getName(user,noSpec);
@@ -157,46 +160,36 @@ public class ReserverPlaceServlet extends HttpServlet {
 		if(P==null)
 		    out.println("<p><i><font color=\"#FFFFFF\">aucune place trouv&eacute</i></p>");
 		else{
-		    out.println(P.toString());
+		    out.println("nom: "+nom+" "+P.toString()+"<br>");
 
 
-		    // if (session.getAttribute("session.PanierListe")!=null){ 
-		    // 	//utilisateur loggé
-		    // 	if(!((PanierListe)session.getAttribute("session.PanierListe")).In(Integer.toString(noSpec),rep.getDate()))
-		    // 	    ((PanierListe)session.getAttribute("session.PanierListe")).Liste.add(new Item(new Spectacle (nom,Integer.toString(noSpec)), rep));
+		    if (session.getAttribute("session.PanierListe")!=null){ 
+		    	//utilisateur loggé
+		    	if(!((PanierListe)session.getAttribute("session.PanierListe")).In(noSpec,rep.toString()))
+		    	    ((PanierListe)session.getAttribute("session.PanierListe")).Liste.add(new Item(new Spectacle (nom,noSpec), rep));
 			
-		    // 	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang());
+		    	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.toString(),Integer.toString(P.getNoPlace()),Integer.toString(P.getNoRang()));
 			
-		    // 	if((String)session.getAttribute("session.log")!=null){
+		    	if((String)session.getAttribute("session.log")!=null){
 			    
-		    // 	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),P.getNoPlace(),P.getNoRang()));
-		    // 	}
+		    	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),rep.toString(),Integer.toString(P.getNoPlace()),Integer.toString(P.getNoRang())));
+
+
+		    	}
 						
-		    // }
-		    // else{
-		    // 	PanierListe p =new PanierListe();	
-		    // 	p.Liste.add(new Item(new Spectacle (new String(nom),Integer.toString(noSpec)), rep));
-		    // 	session.setAttribute("session.PanierListe",p);		
-		    // 	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang());
-		    // 	if((String)session.getAttribute("session.log")!=null){
-		    // 	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),rep.getDate(),P.getNoPlace(),P.getNoRang()));
-		    // 	}
+		    }
+		    else{
+		    	PanierListe p =new PanierListe();	
+		    	p.Liste.add(new Item(new Spectacle (new String(nom),noSpec), rep));
+		    	session.setAttribute("session.PanierListe",p);		
+		    	((PanierListe)session.getAttribute("session.PanierListe")).addPlace(Integer.toString(noSpec),rep.toString(),Integer.toString(P.getNoPlace()),Integer.toString(P.getNoRang()));
 
+		    	if((String)session.getAttribute("session.log")!=null){
+		    	    out.println(Utilitaires.enregistrerPlacePanier(user,(String)session.getAttribute("session.log"),Integer.toString(noSpec),rep.toString(),Integer.toString(P.getNoPlace()),Integer.toString(P.getNoRang())));
+
+		    	}
+		    }
 		}
-		
-	   
-		
-		
-		
-
-
-
-
-
-
-
-
-		
 	    }
 	    catch(Exception e){
 		out.println(e.getMessage());
