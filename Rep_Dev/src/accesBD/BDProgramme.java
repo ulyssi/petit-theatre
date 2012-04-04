@@ -244,7 +244,7 @@ public class BDProgramme {
     }
 
     public static String getName(Utilisateur user,int numS){
-	String rslt="";
+	String rslt="nom"+Integer.toString(numS);
 	Statement stmt=null ;
 	ResultSet rs=null ;
 	Connection conn=null;
@@ -254,10 +254,10 @@ public class BDProgramme {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    if(rs.next())
-		rslt=rs.getString(1);
+		rslt+=rs.getString(1);
 	}
 	catch(Exception e){
-	    rslt= null;
+	    rslt= e.getMessage();
 	    
 	}
 	BDConnexion.FermerTout(conn, stmt, rs);

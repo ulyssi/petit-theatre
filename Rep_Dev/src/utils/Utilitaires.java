@@ -117,7 +117,10 @@ public class Utilitaires {
 	return resultat;
     }
     
-
+    /**
+     *cette methode permet de lister les Representations associer a un spectacle 
+     *@return renvoit une chaine de caracteres au format html
+     */
 
     public static String listerRepresentations(Utilisateur user,int numS){
 	Vector<Representation> res = new Vector<Representation>();
@@ -133,7 +136,7 @@ public class Utilitaires {
 		for (int i = 0; i < res.size(); i++) {
 		    Representation rep=res.elementAt(i);
 		    resultat+="<a href=\"NoPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\">"+rep+"</a><br>";
-		    resultat+="<a href=\"ReserverPlaceServlet?DateS="+rep+"&numS="+rep.getNum()+"\"> acheter dans une zone </a><br>";
+		    resultat+="<a href=\"ReserverPlaceServlet?daterep="+rep+"&numS="+rep.getNum()+"\"> acheter dans une zone </a><br>";
 		}
 	    }
 	    
