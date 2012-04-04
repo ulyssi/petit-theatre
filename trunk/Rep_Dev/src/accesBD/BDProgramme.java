@@ -30,7 +30,7 @@ public class BDProgramme {
     /**
      * retourne la liste des spectacles dÃ©finies dans la bd
      * @param Utilisateur
-     * @return Vector<Categorie>
+     * @return Vector<Spectacles>
      * @throws CategorieException
      * @throws ExceptionConnexion
      */
@@ -57,8 +57,13 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
- 
-
+    /**
+     * Permet l'ajout d'une representation 
+     * @param Utilisateur 
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
     public static void addRepresentation(Utilisateur user,Representation R)throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;
@@ -78,7 +83,14 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);	
 	
     }
-    
+     /**
+     * Permet de retirer une place du panier stocké 
+     * @param Utilisateur
+     * @return un message indiquant que tout c'est bien déroulé ou une errreur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
         public static String retirerPlacePanier(Utilisateur user,String login ,String num, String date,String place,String rang)
 	    throws CategorieException, ExceptionConnexion {
 	    String res="";
@@ -120,6 +132,14 @@ public class BDProgramme {
 	    return res;
     }
 
+
+  /**
+     * Permet de recuperer la liste des representations
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
+
     public static Vector<Representation>  getRepresentation(Utilisateur user,int numS)throws CategorieException, ExceptionConnexion {
 	Vector<Representation> res= new Vector<Representation>();
 	String requete ;
@@ -146,6 +166,13 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);	
 	return res;
     }
+ /**
+     * Permet de recuperer la liste des places disponible pour une représentation
+     * @param Utilisateur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
 
     public static Vector<Place> getPlacesDispo(Utilisateur user,int numS,String date)throws CategorieException, ExceptionConnexion {
 	Vector<Place> res= new Vector<Place>();
@@ -182,27 +209,26 @@ public class BDProgramme {
 	try{
 	    Connection conn = BDConnexion.getConnexion(user.getLogin(), user.getmdp());
 	    //verification de donnees
+	    
 	    requete+= "Select T.noPlace, T.noRang,T.numS,T.dateRep from LESTICKETS T where ";
 	    boolean first=true;
 	    for(int i= 0; i<p.Liste.size();i++)
 	    	for(int j=0; j<p.Liste.get(i).lesPlaces.size();j++){
-	    	    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
+		    if (i==p.Liste.size()-1&&j==p.Liste.get(i).lesPlaces.size()-1)
 	    		requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum();
 	    	    else
-	    		requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+"OR \n";
+	    		requete+="T.noPlace="+p.Liste.get(i).lesPlaces.get(j).getNoPlace()+" and "+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"=T.noRang  and T.DateRep=TO_DATE('"+p.Liste.get(i).representation+"','DD/MM/YYYY HH24\"h\"')"+" and T.numS="+p.Liste.get(i).representation.getNum()+" OR \n";
 	    	}
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    boolean err=false; 
 	    while(rs.next()) {
-	    	res+="la place num "+rs.getInt(1)+" de rang "+rs.getInt(2)+" de spectale "+rs.getInt(3)+" de date "+rs.getDate(1)+" est non disponible";
+	    	res+="la place num "+rs.getInt(1)+" de rang "+rs.getInt(2)+" de spectale "+rs.getInt(3)+" de date "+rs.getDate(4)+" est non disponible <br>";
 	    	err=true;
 	    }
 	    if (err)
 	    	return res;
 	    else {
-		
-
 		
 		// on fait la reservation 
 		requete=""; 
@@ -220,18 +246,22 @@ public class BDProgramme {
 			requete+="\'"+lastnoSerie+"\',\'"+p.Liste.get(i).representation.getNum()+"\', TO_DATE(\'"+p.Liste.get(i).representation;
 			requete+="\',\'DD/MM/YYYY HH24\"h\"\'),"+"\'"+p.Liste.get(i).lesPlaces.get(j).getNoPlace();
 			requete+="\',\'"+p.Liste.get(i).lesPlaces.get(j).getNoRang()+"\',TO_DATE(\'"+dateFormat.format(date)+ "\',\'DD/MM/YYYY HH24\"h\"\'),\'104\')";
+			
 			lastnoSerie++;
+			
 			rs = stmt.executeQuery(requete);
 			rs.close();
+			
+			res+="Reservation valide<br>";
 		    }
-		
+			
 	    }
 	    
 	    BDConnexion.FermerTout(conn, stmt, rs);
 	}
 	
 	catch (SQLException e){
-	    res="<br> Code Oracle " + e.getErrorCode();
+	    res+="<br> Code Oracle " + e.getErrorCode();
 	    res+= "erreur"+e.getMessage();
 	    res+=e.getSQLState();
 	}
@@ -242,9 +272,17 @@ public class BDProgramme {
 	
 	return res;
     }
+/**
+     * Permet de recuperer  le nom d'une representation depuis son numero
+     * @param Utilisateur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
+
 
     public static String getName(Utilisateur user,int numS){
-	String rslt="nom"+Integer.toString(numS);
+	String rslt="";
 	Statement stmt=null ;
 	ResultSet rs=null ;
 	Connection conn=null;
@@ -254,10 +292,10 @@ public class BDProgramme {
 	    stmt = conn.createStatement();
 	    rs = stmt.executeQuery(requete);
 	    if(rs.next())
-		rslt+=rs.getString(1);
+		rslt=rs.getString(1);
 	}
 	catch(Exception e){
-	    rslt= e.getMessage();
+	    rslt= null;
 	    
 	}
 	BDConnexion.FermerTout(conn, stmt, rs);
@@ -266,7 +304,13 @@ public class BDProgramme {
 	return rslt;
     }
 
-
+/**
+     * Permet de recuperer  un place disponible dans une zone 
+     * @param Utilisateur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
     public static Place  getPlaceZone(Utilisateur user,Representation R,int zone){
 	String requete ;
 	Statement stmt=null ;
@@ -297,6 +341,13 @@ public class BDProgramme {
     }
     
     
+/**
+     * Permet de recuperer  la liste des programmes
+     * @param Utilisateur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
     public static Vector<ProgrammeListe> getProgramListes(Utilisateur user)
 	throws CategorieException, ExceptionConnexion {
 	Vector<ProgrammeListe> res = new Vector<ProgrammeListe>();
@@ -337,6 +388,16 @@ public class BDProgramme {
 	BDConnexion.FermerTout(conn, stmt, rs);
 	return res;
     }
+
+
+/**
+     * Permet de recuperer  le panier d'un utilistaeur 
+     * @param le login de l'utilisateur
+     * @param Utilisateur
+     * @throws CategorieException
+     * @throws ExceptionConnexion
+     *
+     **/
         public static PanierListe getPanier(Utilisateur user, String login )throws CategorieException, ExceptionConnexion {
 	String requete ;
 	Statement stmt ;

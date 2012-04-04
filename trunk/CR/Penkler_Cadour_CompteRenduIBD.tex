@@ -1,0 +1,93 @@
+\documentclass[12pt]{article}
+%%% import section 
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel} 
+\usepackage{url} %pour écrire des adresses cliquables
+\usepackage{lmodern} %pour changer le pack de police
+\usepackage[top=3cm, bottom=4cm, left=3cm, right=3cm]{geometry} %pour les marges
+\usepackage[francais]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+%setSection
+\setlength{\baselineskip}{16.0pt}    % 16 pt usual spacing between lines
+\setlength{\parskip}{3pt plus 2pt}
+\setlength{\parindent}{20pt}
+\setlength{\textwidth}{150mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\noindent Ulysse Cadour \\
+Alexandre Penkler\\
+
+
+\begin{center}
+  {\large  Compte Rendu Projet \\
+    Petit Théatre:\\
+    Application multi-niveaux
+    } \\ % \\ = new line
+  Mars 2012\\
+\end{center}
+\newpage
+
+
+
+\section{ Compléter les interactions fournies}
+Dans cette partie nous avons complété les deux servets : (ProgrammeServlet et NouvelleRepresentationServlet) en grantissant bien entendu l'integrité de la base.
+
+ 
+
+
+\section{ Fournir de nouvelles interactions}
+
+Nous avons écris une servlet permettant de consulter la liste des représentations disponible.Nous l'avons testé avec des requêtes conccurentes. Nous avons remarquer que les servlet intéragissait correctement avec la base.
+Nous avons réalisé des servlet permettant de consulter l'ensemble des places disponible. L'avantage que cela nous donné par la suite à été de pouvoir réutiliser les requêtes sur la base de données pour des requetes d'ajout de place et de représentation dans notre panier Dynamique et Statique.
+
+
+\subsection{Intégrité}
+Pour garantir l'intégrité de la base nous avons utilisé deux approches. Une première qui repose sur des vérification au sein de la base de données, par example que lorsaue l'on reserve une place nous vérfions que la place n'est pas déjà dans les Tickets. Souvent dans ce cas Nous utilisions le chainage d'exception pour faire ressortir l'erreur.
+
+
+Une autre approche était d'assurer certaines contraintes directement au niveau du logiciel, soit le passage de paramètre etc.. Par example c'est au niveau du logiciel que l'on vérifie qu'une représentation n'est pas dépassée avant de l'ajouter au caddi.
+
+\subsection{Liens entre les Servlets}
+
+Nous avons Creer des liens entre les servlet de manière à utiliser les resultats d'une comme paramètres d'une autre. Ainsi cela réduit l'utilisation de formulaires ce qui est fastidieu pour l'utilisateur.
+
+Pour ce faire nous avons utilisé deux méthodes. La première méthode est d'utiliser les cookies, ce qui est pratique car pon peut stocker des structures de données entières sans avoir à les parser.
+
+La deuxième méthode est d'uliser la requête html. C'est à dire on appel une autre servlet avec une requête html et on utilise \emph{"[url]?parametre1=valeur\&parametre2=valeur... "}. Dans ce cas on ne peut stocker que des valeurs simple et non des structures de données complexes. Par contre contrairement à la méthode précèdante si que l'utilisateur bloque les cookies sur son navigateur ce n'est pas problématique.
+
+
+\section{Caddie du client}
+ 
+\subsection{Modele de données}
+ 
+\subsection{Interactions avec la base de donnée}
+
+\subsection{tests}
+
+\section{Sécurité}
+
+Pour effectuer cette étape il nous a fallut configurer \emph{apache-TomCat} pour protéger certaines pages. Ainsi on liste dans le fichier \emph{web.xml} les pages disponibles uniquement aux utilisateurs logués. La restriction va plus loin en permettant de restreindre l'accès à certain type d'utilisateurs. Dans notre cas les utilisateurs logués de type \emph{admin}. Ensuite il faut s'assurer que dans le fichier \emph{tomcat-users.xml} le type et un nom utilisateur est défini. Pour faciliter ce travail nous avons utilisé un dossier admin contenant les pages sensibles.
+
+
+
+\section{ Présentation}
+Nous avons inclut du code java-script dans notre application afin de  mettre en valeur certains elements. Une bibliotheque java-script à été utilisée afin de visualiser le contenu de la base plus aisement. Ce code java-script est bien adapté pour des requêtes sur une base de donnée.
+
+
+\section{travail restant}
+
+Faute de temps nous n'avons pas pu remplacer les pages données en html en jsp pour pouvoir y inclure directement du code java donnat du contenu dynamique.
+Cela dis nous avons fait l'étude et les recherches pour savoir comment faire.
+
+Egalement avec plus de temps nous aurions rendu moin hétérogène le logiciel au niveau de l'utilisation.
+
+
+\end{document}
+
+
+
+
